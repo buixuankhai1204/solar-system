@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class CircleMovation : MonoBehaviour
 {
@@ -189,6 +190,7 @@ public class CircleMovation : MonoBehaviour
 
     public void DrawAgain()
     {
+        orbit.material = orbit.materials[Random.Range(0,9)];
         orbit.positionCount = 0;
         currentIndex = 0;
         indexMax = 1000;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,9 +21,15 @@ public class GameManager : MonoBehaviour
     public float speedCamera = 0.003f;
     public float zoomCamera = 1f;
     public bool checkShowInf = false;
+    private float x, y, z;
+    public bool changeValueView = true;
+    public Toggle changeView;
+    float DegY, DegX;
+
 
     void Start()
     {
+        Camera.main.fieldOfView = 15f;
         listPlanetInformations = new Dictionary<string, PlanetInformation>();
         foreach (var planetInformation in list.PlanetsInformation)
         {
@@ -34,68 +41,184 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        ZoomCamera();
+        Debug.Log(Input.mousePosition);
+        if (!changeValueView)
+        {
+            ZoomCamera();
+        }
+
         MoveCamera();
+        changeView.onValueChanged.AddListener((delegate { ChangeView3D(changeView.isOn); }));
     }
 
     public void MoveCamera()
     {
-        if (!Input.GetButton("Fire2"))
+        if (!changeValueView)
         {
-            Debug.Log("aaa");
-            firstCheck = true;
+            if (!Input.GetButton("Fire2"))
+            {
+                firstCheck = true;
+            }
+
+            if (Input.GetButton("Fire2"))
+            {
+                if (firstCheck)
+                {
+                    firstCheck = false;
+                    mousePositionUp = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                        Input.mousePosition.y, Camera.main.nearClipPlane));
+                }
+
+                mousePositionDown = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                    Input.mousePosition.y,
+                    Camera.main.nearClipPlane));
+
+                distance = Mathf.Sqrt(Mathf.Pow(mousePositionUp.x - mousePositionDown.x, 2) +
+                                      Mathf.Pow(mousePositionUp.y - mousePositionDown.y, 2)) * speedCamera;
+                yDistance = (Mathf.Max(mousePositionUp.y, mousePositionDown.y) -
+                             Mathf.Min(mousePositionUp.y, mousePositionDown.y)) * speedCamera;
+
+                angle = Mathf.Sin(yDistance / distance);
+                if (angle > 0.8f)
+                {
+                    angle = Mathf.Asin(yDistance / distance);
+                }
+
+                if ((PrevMousePos != Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                        Input.mousePosition.y, Camera.main.nearClipPlane))))
+                {
+                    if (mousePositionUp.y > mousePositionDown.y)
+                    {
+                        y = Mathf.Sin(angle) * distance;
+                    }
+                    else
+                    {
+                        y = -Mathf.Sin(angle) * distance;
+                    }
+
+                    if (mousePositionUp.x > mousePositionDown.x)
+                    {
+                        x = Mathf.Cos(angle) * distance;
+                    }
+                    else
+                    {
+                        x = -Mathf.Cos(angle) * distance;
+                    }
+
+                    Camera.main.transform.position +=
+                        new Vector3(x, y, 0);
+                    PrevMousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                        Input.mousePosition.y,
+                        Camera.main.nearClipPlane));
+                }
+                else
+                {
+                    mousePositionUp = mousePositionDown;
+                }
+            }
         }
-
-        if (Input.GetButton("Fire2"))
+        else
         {
-            if (firstCheck)
+            if (Input.GetKey(KeyCode.W))
             {
-                firstCheck = false;
-                mousePositionUp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Camera.main.fieldOfView -= zoomCamera * Time.deltaTime * 10 * speedCamera;
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                Camera.main.fieldOfView += zoomCamera * Time.deltaTime * 10 * speedCamera;
             }
 
-            mousePositionDown = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            distance = Mathf.Sqrt(Mathf.Pow(mousePositionUp.x - mousePositionDown.x, 2) +
-                                  Mathf.Pow(mousePositionUp.y - mousePositionDown.y, 2)) * speedCamera;
-            yDistance = (Mathf.Max(mousePositionUp.y, mousePositionDown.y) -
-                         Mathf.Min(mousePositionUp.y, mousePositionDown.y)) * speedCamera;
-
-            angle = Mathf.Sin(yDistance / distance);
-            if (angle > 0.8f)
+            if (Input.GetKey(KeyCode.A))
             {
-                angle = Mathf.Asin(yDistance / distance);
-                // Debug.Log("angle change: " + angle);
+                x = -Mathf.Cos(Time.deltaTime) * 2 * speedCamera;
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                x = Mathf.Cos(Time.deltaTime) * 2 * speedCamera;
             }
 
-            if ((PrevMousePos != Camera.main.ScreenToWorldPoint(Input.mousePosition)))
+            if (Input.GetKey(KeyCode.Q))
             {
-                if (mousePositionUp.y > mousePositionDown.y && mousePositionUp.x > mousePositionDown.x)
+                y = -Mathf.Sin(Time.deltaTime) * 2 * speedCamera;
+            }
+            else if (Input.GetKey(KeyCode.E))
+            {
+                y = Mathf.Sin(Time.deltaTime) * 2 * speedCamera;
+            }
+
+            
+            Camera.main.transform.position +=
+                new Vector3(x, y, 0);
+            x = 0;
+            y = 0;
+
+            
+            if (!Input.GetButton("Fire2"))
+            {
+                firstCheck = true;
+            }
+            
+            if (Input.GetButton("Fire2"))
+            {
+                if (firstCheck)
                 {
-                    Camera.main.transform.position +=
-                        new Vector3(Mathf.Cos(angle) * distance, Mathf.Sin(angle) * distance, 0);
-                }
-                else if (mousePositionUp.y > mousePositionDown.y && mousePositionUp.x < mousePositionDown.x)
-                {
-                    Camera.main.transform.position +=
-                        new Vector3(-Mathf.Cos(angle) * distance, Mathf.Sin(angle) * distance, 0);
-                }
-                else if (mousePositionUp.y < mousePositionDown.y && mousePositionUp.x > mousePositionDown.x)
-                {
-                    Camera.main.transform.position +=
-                        new Vector3(Mathf.Cos(angle) * distance, -Mathf.Sin(angle) * distance, 0);
-                }
-                else if (mousePositionUp.y < mousePositionDown.y && mousePositionUp.x < mousePositionDown.x)
-                {
-                    Camera.main.transform.position +=
-                        new Vector3(-Mathf.Cos(angle) * distance, -Mathf.Sin(angle) * distance, 0);
+                    firstCheck = false;
+                    mousePositionUp = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                        Input.mousePosition.y, Camera.main.nearClipPlane));
                 }
 
-                PrevMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            }
-            else
-            {
-                mousePositionUp = mousePositionDown;
+                mousePositionDown = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                    Input.mousePosition.y,
+                    Camera.main.nearClipPlane));
+
+                distance = Mathf.Sqrt(Mathf.Pow(mousePositionUp.x - mousePositionDown.x, 2) +
+                                      Mathf.Pow(mousePositionUp.y - mousePositionDown.y, 2)) * speedCamera;
+                yDistance = (Mathf.Max(mousePositionUp.y, mousePositionDown.y) -
+                             Mathf.Min(mousePositionUp.y, mousePositionDown.y)) * speedCamera;
+
+                angle = Mathf.Sin(yDistance / distance);
+                if (angle > 0.8f)
+                {
+                    angle = Mathf.Asin(yDistance / distance);
+                }
+
+                if (PrevMousePos != Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                        Input.mousePosition.y, Camera.main.nearClipPlane)))
+                {
+                    if (mousePositionUp.y > mousePositionDown.y)
+                    {
+                        DegX = -Mathf.Sin(angle) * speedCamera * Mathf.Rad2Deg;
+                    }
+                    else
+                    {
+                        DegX = Mathf.Sin(angle) * speedCamera * Mathf.Rad2Deg;
+                    }
+
+                    if (mousePositionUp.x > mousePositionDown.x)
+                    {
+                        DegY = -Mathf.Cos(angle) * speedCamera * Mathf.Rad2Deg;
+                    }
+                    else
+                    {
+                        DegY = Mathf.Cos(angle) * speedCamera * Mathf.Rad2Deg;
+                    }
+
+
+                    Quaternion newRotation = Camera.main.transform.rotation * Quaternion.Euler(new Vector3(DegX,
+                        DegY, 0) * Time.deltaTime);
+                    
+                    
+                    Camera.main.transform.rotation = newRotation;
+                    PrevMousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                        Input.mousePosition.y,
+                        Camera.main.nearClipPlane));
+                    DegX = 1;
+                    DegY = 1;
+                }
+                else
+                {
+                    mousePositionUp = mousePositionDown;
+                }
             }
         }
     }
@@ -106,12 +229,17 @@ public class GameManager : MonoBehaviour
         {
             if (Input.mouseScrollDelta.y == -1)
             {
-                Camera.main.orthographicSize += zoomCamera;
+                Camera.main.fieldOfView += zoomCamera;
             }
             else if (Input.mouseScrollDelta.y == 1)
             {
-                Camera.main.orthographicSize -= zoomCamera;
+                Camera.main.fieldOfView -= zoomCamera;
             }
         }
+    }
+
+    public void ChangeView3D(bool value)
+    {
+        changeValueView = value;
     }
 }
