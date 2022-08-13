@@ -115,8 +115,8 @@ MonoBehaviour:
   name: "M\u1EB7t Tr\u1EDDi"
   tag: Sun Sphere
   distaneWithSun: 0
-  width: 13230
-  height: -15696
+  width: 0
+  height: 0
   speed: 5
   longDescription: "M\u1EB7t Tr\u1EDDi ch\xEDnh l\xE0 ng\xF4i sao \u1EDF trung t\xE2m
     H\u1EC7 M\u1EB7t Tr\u1EDDi, chi\u1EBFm kho\u1EA3ng 99,8% kh\u1ED1i l\u01B0\u1EE3ng

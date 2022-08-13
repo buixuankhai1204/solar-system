@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -14,6 +16,7 @@ public class ShowInformation : MonoBehaviour
     public TextMeshProUGUI rotary;
     public TextMeshProUGUI nameInf;
     public Vector3 positionNameActive;
+    public TextMeshProUGUI changeSpeedCamera;
 
     public GameObject planet;
 
@@ -46,6 +49,14 @@ public class ShowInformation : MonoBehaviour
             
         }
 
+    }
+
+    public IEnumerator ShowSpeedCamera(float value)
+    {
+        changeSpeedCamera.gameObject.SetActive(true);
+        changeSpeedCamera.text = Math.Round(value,2).ToString() + "x";
+        yield return new WaitForSeconds(2);
+        changeSpeedCamera.gameObject.SetActive(false);
     }
     
 }
