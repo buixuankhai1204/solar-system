@@ -166,9 +166,9 @@ public class GameManager : MonoBehaviour
                 {
                     x = -Mathf.Cos(angle) * distance;
                 }
-
+                
                 Camera.main.transform.position +=
-                    new Vector3(x, y, 0);
+                    new Vector3(x, y);
                 PrevMousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
                     Input.mousePosition.y,
                     Camera.main.nearClipPlane));
