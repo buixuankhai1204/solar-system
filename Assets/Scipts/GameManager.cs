@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private Vector2 mousePositionUp;
     private Vector2 mousePositionDown;
     private Vector3 PrevMousePos;
+    private Camera camera;
     private float distance;
     private float angle;
     private float yDistance;
@@ -30,8 +31,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        camera = Camera.main;
         showInformation = GameObject.FindWithTag("UiManager").GetComponent<ShowInformation>();
-        Camera.main.fieldOfView = 15f;
+        camera.fieldOfView = 15f;
         listPlanetInformations = new Dictionary<string, PlanetInformation>();
         foreach (var planetInformation in list.PlanetsInformation)
         {
@@ -62,6 +64,7 @@ public class GameManager : MonoBehaviour
     {
         if (!changeValueView)
         {
+            camera.orthographicSize = 0;
             FreeCamera2D();
         }
         else
@@ -76,11 +79,11 @@ public class GameManager : MonoBehaviour
         {
             if (Input.mouseScrollDelta.y == -1)
             {
-                Camera.main.fieldOfView += zoomCamera;
+                camera.fieldOfView += zoomCamera;
             }
             else if (Input.mouseScrollDelta.y == 1)
             {
-                Camera.main.fieldOfView -= zoomCamera;
+                camera.fieldOfView -= zoomCamera;
             }
         }
     }
@@ -127,13 +130,13 @@ public class GameManager : MonoBehaviour
             if (firstCheck)
             {
                 firstCheck = false;
-                mousePositionUp = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
-                    Input.mousePosition.y, Camera.main.nearClipPlane));
+                mousePositionUp = camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                    Input.mousePosition.y, camera.nearClipPlane));
             }
 
-            mousePositionDown = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+            mousePositionDown = camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
                 Input.mousePosition.y,
-                Camera.main.nearClipPlane));
+                camera.nearClipPlane));
 
             distance = Mathf.Sqrt(Mathf.Pow(mousePositionUp.x - mousePositionDown.x, 2) +
                                   Mathf.Pow(mousePositionUp.y - mousePositionDown.y, 2)) * speedCamera;
@@ -146,8 +149,8 @@ public class GameManager : MonoBehaviour
                 angle = Mathf.Asin(yDistance / distance);
             }
 
-            if ((PrevMousePos != Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
-                    Input.mousePosition.y, Camera.main.nearClipPlane))))
+            if (PrevMousePos != camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                    Input.mousePosition.y, camera.nearClipPlane)))
             {
                 if (mousePositionUp.y > mousePositionDown.y)
                 {
@@ -166,12 +169,11 @@ public class GameManager : MonoBehaviour
                 {
                     x = -Mathf.Cos(angle) * distance;
                 }
-                
-                Camera.main.transform.position +=
-                    new Vector3(x, y);
-                PrevMousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                camera.transform.position +=
+                    new Vector3(x, y, 0);
+                PrevMousePos = camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
                     Input.mousePosition.y,
-                    Camera.main.nearClipPlane));
+                    camera.nearClipPlane));
             }
             else
             {
@@ -182,13 +184,14 @@ public class GameManager : MonoBehaviour
 
     public void PositionCamera3D()
     {
+
         if (Input.GetKey(KeyCode.W))
         {
-            Camera.main.fieldOfView -= zoomCamera * Time.deltaTime * 10 * speedCamera;
+            camera.fieldOfView -= zoomCamera * Time.deltaTime * 10 * speedCamera;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            Camera.main.fieldOfView += zoomCamera * Time.deltaTime * 10 * speedCamera;
+            camera.fieldOfView += zoomCamera * Time.deltaTime * 10 * speedCamera;
         }
 
         if (Input.GetKey(KeyCode.A))
@@ -209,7 +212,7 @@ public class GameManager : MonoBehaviour
             y = Mathf.Sin(Time.deltaTime) * 20 * speedCamera;
         }
 
-        Camera.main.transform.position +=
+        camera.transform.position +=
             new Vector3(x, y, 0);
         x = 0;
         y = 0;
@@ -227,14 +230,14 @@ public class GameManager : MonoBehaviour
             if (firstCheck)
             {
                 firstCheck = false;
-                mousePositionUp = Camera.main.ViewportToScreenPoint(new Vector3(Input.mousePosition.x,
+                mousePositionUp = camera.ViewportToScreenPoint(new Vector3(Input.mousePosition.x,
                     Input.mousePosition.y,
-                    Camera.main.nearClipPlane));
+                    camera.nearClipPlane));
             }
 
-            mousePositionDown = Camera.main.ViewportToScreenPoint(new Vector3(Input.mousePosition.x,
+            mousePositionDown = camera.ViewportToScreenPoint(new Vector3(Input.mousePosition.x,
                 Input.mousePosition.y,
-                Camera.main.nearClipPlane));
+                camera.nearClipPlane));
 
             distance = Mathf.Sqrt(Mathf.Pow(mousePositionUp.x - mousePositionDown.x, 2) +
                                   Mathf.Pow(mousePositionUp.y - mousePositionDown.y, 2)) * speedCamera;
@@ -247,8 +250,8 @@ public class GameManager : MonoBehaviour
                 Debug.Log("angle: " + angle);
                 angle = Mathf.Asin(yDistance / distance);
             }
-            if ((PrevMousePos - Camera.main.ViewportToScreenPoint(new Vector3(Input.mousePosition.x,
-                    Input.mousePosition.y, Camera.main.nearClipPlane))).sqrMagnitude > 0 &&
+            if ((PrevMousePos - camera.ViewportToScreenPoint(new Vector3(Input.mousePosition.x,
+                    Input.mousePosition.y, camera.nearClipPlane))).sqrMagnitude > 0 &&
                 (mousePositionDown - mousePositionUp).sqrMagnitude > 2f)
 
             {
@@ -271,13 +274,13 @@ public class GameManager : MonoBehaviour
                 }
 
                 Quaternion newRotation;
-                newRotation = Camera.main.transform.rotation * Quaternion.Euler(new Vector3(DegX,
+                newRotation = camera.transform.rotation * Quaternion.Euler(new Vector3(DegX,
                     DegY, 0) * Time.deltaTime);
-                Camera.main.transform.rotation = newRotation;
+                camera.transform.rotation = newRotation;
 
-                PrevMousePos = Camera.main.ViewportToScreenPoint(new Vector3(Input.mousePosition.x,
+                PrevMousePos = camera.ViewportToScreenPoint(new Vector3(Input.mousePosition.x,
                     Input.mousePosition.y,
-                    Camera.main.nearClipPlane));
+                    camera.nearClipPlane));
             }
             else
             {
