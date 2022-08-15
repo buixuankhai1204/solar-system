@@ -4997,8 +4997,8 @@ MonoBehaviour:
   name: "Tr\xE1i \u0111\u1EA5t"
   tag: Earth
   distaneWithSun: 50
-  width: 225
-  height: 84
+  width: 50
+  height: 50
   speed: 4.8826838
   longDescription: "Tr\xE1i \u0110\u1EA5t hay \u0110\u1ECBa C\u1EA7u (ch\u1EEF H\xE1n:
     \u5730\u7403, ti\u1EBFng Anh: Earth), l\xE0 h\xE0nh tinh th\u1EE9 ba t\xEDnh

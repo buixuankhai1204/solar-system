@@ -173,7 +173,7 @@ MonoBehaviour:
   name: Sao Kim
   tag: Venus
   distaneWithSun: 35
-  width: 60
+  width: 35
   height: 35
   speed: 5
   longDescription: "Sao Kim (Kim tinh (ch\u1EEF H\xE1n: \u91D1\u661F), c\xF2n g\u1ECDi
