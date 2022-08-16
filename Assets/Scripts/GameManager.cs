@@ -46,13 +46,11 @@ public class GameManager : MonoBehaviour
         listPlanetInformationstmp = new Dictionary<string, PlanetInformation>();
         foreach (var planetInformation in list.PlanetsInformation)
         {
+            listPlanetInformationstmp.Add(planetInformation.tag, planetInformation);
             listPlanetInformations.Add(planetInformation.tag, planetInformation);
             GameObject.Find(planetInformation.tag).transform.rotation =
                 Quaternion.Euler(0, 0, listPlanetInformations[planetInformation.tag].rotary);
         }
-
-        listPlanetInformationstmp = listPlanetInformations;
-
     }
 
     private void Update()
@@ -304,12 +302,11 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        upWidth.onValueChanged.AddListener((arg0 =>
+        upWidth.onValueChanged.AddListener(arg0 =>
         {
             listPlanetInformations[nameActive].width = arg0;
             isDrawAgain = true;
-
-        }));
+        });
     }
 
     public void UpHeight()
@@ -319,12 +316,11 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        upHeight.onValueChanged.AddListener((arg0 =>
+        upHeight.onValueChanged.AddListener(arg0 =>
         {
             listPlanetInformations[nameActive].height = arg0;
             isDrawAgain = true;
-        }));
-        
+        });
     }
 
     

@@ -105,12 +105,15 @@ public class CircleMovation : MonoBehaviour
             gameManager.nameActive = raycastHit.transform.name;
             if (gameManager.nameActive == name)
             {
-                gameManager.upHeight.value = gameManager.listPlanetInformationstmp[gameManager.nameActive].height;
-                gameManager.upHeight.maxValue = gameManager.listPlanetInformationstmp[gameManager.nameActive].height * 2;
+
+                gameManager.upHeight.maxValue = gameManager.listPlanetInformationstmp[gameManager.nameActive].distaneWithSun * 2;
                 gameManager.upHeight.minValue = 0;
-                gameManager.upWidth.value = gameManager.listPlanetInformationstmp[gameManager.nameActive].width;
-                gameManager.upWidth.maxValue = gameManager.listPlanetInformationstmp[gameManager.nameActive].width * 2;
+                gameManager.upHeight.value = gameManager.listPlanetInformationstmp[gameManager.nameActive].height;
+
+                gameManager.upWidth.maxValue = gameManager.listPlanetInformationstmp[gameManager.nameActive].distaneWithSun * 2;
                 gameManager.upWidth.minValue = 0; 
+                gameManager.upWidth.value = gameManager.listPlanetInformationstmp[gameManager.nameActive].width;
+
             }
             
         }
@@ -130,7 +133,6 @@ public class CircleMovation : MonoBehaviour
 
     public void DrawAgain()
     {
-        orbit.material = orbit.materials[Random.Range(0,9)];
         orbit.positionCount = 0;
         currentIndex = 0;
         indexMax = 1000;
