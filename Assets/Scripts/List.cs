@@ -4,4 +4,5 @@ using UnityEngine;
 public class List : ScriptableObject
 {
     public PlanetInformation[] PlanetsInformation;
+    public PlanetInformation[] PlanetsInformationTmp;
 }

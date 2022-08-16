@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class GameManager : MonoBehaviour
     public ShowInformation showInformation;
     public List list;
     public Dictionary<string, PlanetInformation> listPlanetInformations;
-    public Dictionary<string, PlanetInformation> listPlanetInformationstmp;
+    public Dictionary<string, PlanetInformation> listPlanetInformationsTmp;
     public float scale = 1;
     private Vector2 mousePositionUp;
     private Vector2 mousePositionDown;
@@ -19,7 +20,6 @@ public class GameManager : MonoBehaviour
     private float distance;
     private float angle;
     private float yDistance;
-    private float xDistance;
     public bool firstCheck;
     public float speedCamera = 0.003f;
     public float zoomCamera = 1f;
@@ -31,10 +31,16 @@ public class GameManager : MonoBehaviour
     public Slider slider;
     public Slider upWidth;
     public Slider upHeight;
+    public Button resetAll;
+    public Button resetOne;
     public string nameActive;
     public bool isDrawAgain = false;
+    public bool moveY3D = false;
+    public float prevSpeed;
+    public int count;
 
-
+    public helper helper;
+    // public bool checkSecondShowSpeed;
 
 
     void Start()
@@ -43,13 +49,18 @@ public class GameManager : MonoBehaviour
         showInformation = GameObject.FindWithTag("UiManager").GetComponent<ShowInformation>();
         camera.fieldOfView = 15f;
         listPlanetInformations = new Dictionary<string, PlanetInformation>();
-        listPlanetInformationstmp = new Dictionary<string, PlanetInformation>();
+        listPlanetInformationsTmp = new Dictionary<string, PlanetInformation>();
         foreach (var planetInformation in list.PlanetsInformation)
         {
-            listPlanetInformationstmp.Add(planetInformation.tag, planetInformation);
             listPlanetInformations.Add(planetInformation.tag, planetInformation);
+
             GameObject.Find(planetInformation.tag).transform.rotation =
                 Quaternion.Euler(0, 0, listPlanetInformations[planetInformation.tag].rotary);
+        }
+
+        foreach (var planetInformation in list.PlanetsInformationTmp)
+        {
+            listPlanetInformationsTmp.Add(planetInformation.tag, planetInformation);
         }
     }
 
@@ -58,12 +69,22 @@ public class GameManager : MonoBehaviour
         if (Input.GetButton("Fire2") && Input.mouseScrollDelta != Vector2.zero)
         {
             ChangeSpeedCamera();
-            StartCoroutine(showInformation.ShowSpeedCamera(speedCamera));
-
+            prevSpeed = speedCamera;
+            showInformation.ShowSpeedCamera(speedCamera);
         }
         else
         {
             ZoomCamera();
+            if (prevSpeed == speedCamera)
+            {
+                count++;
+                if (count == 100)
+                {
+                    showInformation.changeSpeedCamera.gameObject.SetActive(false);
+                    prevSpeed = 0;
+                    count = 0;
+                }
+            }
         }
 
         MoveCamera();
@@ -84,16 +105,13 @@ public class GameManager : MonoBehaviour
 
     public void ZoomCamera()
     {
-        if (Input.mouseScrollDelta != Vector2.zero)
+        if (Input.mouseScrollDelta.y == -1)
         {
-            if (Input.mouseScrollDelta.y == -1)
-            {
-                camera.fieldOfView += zoomCamera;
-            }
-            else if (Input.mouseScrollDelta.y == 1)
-            {
-                camera.fieldOfView -= zoomCamera;
-            }
+            camera.fieldOfView += zoomCamera;
+        }
+        else if (Input.mouseScrollDelta.y == 1)
+        {
+            camera.fieldOfView -= zoomCamera;
         }
     }
 
@@ -113,7 +131,6 @@ public class GameManager : MonoBehaviour
                 speedCamera += Time.deltaTime;
             }
         }
-
     }
 
     public void ChangeView3D(bool value)
@@ -155,8 +172,9 @@ public class GameManager : MonoBehaviour
             {
                 return;
             }
+
             angle = Mathf.Sin(yDistance / distance);
-            if (angle > 0.8f)
+            if (angle > 0.83f)
             {
                 angle = Mathf.Asin(yDistance / distance);
             }
@@ -181,7 +199,8 @@ public class GameManager : MonoBehaviour
                 {
                     x = -Mathf.Cos(angle) * distance;
                 }
-                camera.transform.position +=  new Vector3(x, y);
+
+                camera.transform.position += new Vector3(x, y);
                 PrevMousePos = camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
                     Input.mousePosition.y, 0));
                 x = 0;
@@ -196,7 +215,6 @@ public class GameManager : MonoBehaviour
 
     public void PositionCamera3D()
     {
-
         if (Input.GetKey(KeyCode.W))
         {
             camera.fieldOfView -= zoomCamera * Time.deltaTime * 10 * speedCamera;
@@ -224,7 +242,7 @@ public class GameManager : MonoBehaviour
             y = Mathf.Sin(Time.deltaTime) * 100 * speedCamera;
         }
 
-        camera.transform.position +=  new Vector3(x, y);
+        camera.transform.position += new Vector3(x, y);
         x = 0;
         y = 0;
     }
@@ -254,13 +272,16 @@ public class GameManager : MonoBehaviour
                                   Mathf.Pow(mousePositionUp.y - mousePositionDown.y, 2)) * speedCamera;
             yDistance = (Mathf.Max(mousePositionUp.y, mousePositionDown.y) -
                          Mathf.Min(mousePositionUp.y, mousePositionDown.y)) * speedCamera;
-            
+
             angle = Mathf.Sin(yDistance / distance);
-            if (angle > 0.8f)
+            if (angle > 0.78f)
             {
-                Debug.Log("angle: " + angle);
+                // Debug.Log("angle: " + angle);
                 angle = Mathf.Asin(yDistance / distance);
+                moveY3D = true;
+                DegY = 0;
             }
+
             if (
                 (mousePositionDown - mousePositionUp).sqrMagnitude > 0.5f)
 
@@ -276,13 +297,17 @@ public class GameManager : MonoBehaviour
 
                 if (mousePositionUp.x > mousePositionDown.x)
                 {
-                    DegY = -Mathf.Cos(angle) * speedCamera * Mathf.Rad2Deg;
+                    if (moveY3D == false)
+                        DegY = -Mathf.Cos(angle) * speedCamera * Mathf.Rad2Deg;
                 }
                 else
                 {
-                    DegY = Mathf.Cos(angle) * speedCamera * Mathf.Rad2Deg;
+                    if (moveY3D == false)
+                        DegY = Mathf.Cos(angle) * speedCamera * Mathf.Rad2Deg;
                 }
 
+                moveY3D = false;
+                Debug.Log(DegY);
                 Quaternion newRotation;
                 newRotation = camera.transform.rotation * Quaternion.Euler(new Vector3(DegX,
                     DegY, 0) * Time.deltaTime);
@@ -294,7 +319,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    
+
     public void UpWidth()
     {
         if (nameActive == "")
@@ -323,7 +348,24 @@ public class GameManager : MonoBehaviour
         });
     }
 
-    
+    public void ResetAll()
+    {
+        resetAll.onClick.AddListener(delegate
+        {
+            listPlanetInformations = listPlanetInformationsTmp;
+        });
+    }
 
-    
+    public void ResetOne()
+    {
+        if (nameActive != null)
+        {
+            return;
+        }
+
+        resetOne.onClick.AddListener(delegate
+        {
+            listPlanetInformations[nameActive] = listPlanetInformationsTmp[nameActive];
+        });
+    }
 }

@@ -106,13 +106,13 @@ public class CircleMovation : MonoBehaviour
             if (gameManager.nameActive == name)
             {
 
-                gameManager.upHeight.maxValue = gameManager.listPlanetInformationstmp[gameManager.nameActive].distaneWithSun * 2;
+                gameManager.upHeight.maxValue = gameManager.listPlanetInformations[gameManager.nameActive].distaneWithSun * 2;
                 gameManager.upHeight.minValue = 0;
-                gameManager.upHeight.value = gameManager.listPlanetInformationstmp[gameManager.nameActive].height;
+                gameManager.upHeight.value = gameManager.listPlanetInformations[gameManager.nameActive].height;
 
-                gameManager.upWidth.maxValue = gameManager.listPlanetInformationstmp[gameManager.nameActive].distaneWithSun * 2;
+                gameManager.upWidth.maxValue = gameManager.listPlanetInformations[gameManager.nameActive].distaneWithSun * 2;
                 gameManager.upWidth.minValue = 0; 
-                gameManager.upWidth.value = gameManager.listPlanetInformationstmp[gameManager.nameActive].width;
+                gameManager.upWidth.value = gameManager.listPlanetInformations[gameManager.nameActive].width;
 
             }
             

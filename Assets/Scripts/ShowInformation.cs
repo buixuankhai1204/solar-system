@@ -24,7 +24,6 @@ public class ShowInformation : MonoBehaviour
     {
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         positionNameActive = new Vector3(70, 10, 0);
-
     }
 
 
@@ -32,31 +31,24 @@ public class ShowInformation : MonoBehaviour
     {
         foreach (var planet in gameManager.listPlanetInformations)
         {
-            this.planet = gameObject;   
+            this.planet = gameObject;
             if (planet.Key == name)
             {
                 this.name.text = planet.Value.name;
                 this.name.fontSize = 14f;
-                nameSpeed.text = "Vận tốc của: " + planet.Value.name;
+                this.nameSpeed.text = "Vận tốc của: " + planet.Value.name;
                 this.nameInf.text = planet.Value.name;
                 this.size.text = planet.Value.size.ToString();
                 this.element.text = planet.Value.element;
                 this.longDescription.text = planet.Value.longDescription;
                 this.rotary.text = planet.Value.rotary.ToString();
-                
-                
             }
-            
         }
-
     }
 
-    public IEnumerator ShowSpeedCamera(float value)
+    public void ShowSpeedCamera(float value)
     {
         changeSpeedCamera.gameObject.SetActive(true);
-        changeSpeedCamera.text = Math.Round(value,2).ToString() + "x";
-        yield return new WaitForSeconds(2);
-        changeSpeedCamera.gameObject.SetActive(false);
+        changeSpeedCamera.text = Math.Round(value, 2) + "x";
     }
-    
 }
