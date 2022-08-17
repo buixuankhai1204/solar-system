@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShowInformation : MonoBehaviour
@@ -17,7 +14,6 @@ public class ShowInformation : MonoBehaviour
     public TextMeshProUGUI nameInf;
     public Vector3 positionNameActive;
     public TextMeshProUGUI changeSpeedCamera;
-
     public GameObject planet;
 
     private void Start()
@@ -25,7 +21,6 @@ public class ShowInformation : MonoBehaviour
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         positionNameActive = new Vector3(70, 10, 0);
     }
-
 
     public void ShowInformationPlanet(string name, GameObject gameObject)
     {

@@ -144,7 +144,7 @@ LODGroup:
     renderers:
     - renderer: {fileID: 23492463847442280}
     - renderer: {fileID: 199080007387293916}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!135 &4182879556056083133
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -180,7 +180,7 @@ MonoBehaviour:
     l\xE0 sao Th\xE1i B\u1EA1ch (\u592A\u767D), Th\xE1i B\u1EA1ch Kim tinh (\u592A\u767D\u91D1\u661F),
     ti\u1EBFng Anh: Venus) l\xE0 h\xE0nh tinh th\u1EE9 2 trong h\u1EC7 M\u1EB7t Tr\u1EDDi,
     t\u1EF1 quay quanh n\xF3 v\u1EDBi chu k\u1EF3 224,7 ng\xE0y Tr\xE1i \u0110\u1EA5t."
-  element: Sao Ki
+  element: m
   size: 0
   rotary: 177.3
   speedrotation: 6.52

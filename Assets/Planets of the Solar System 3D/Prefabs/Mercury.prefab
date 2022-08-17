@@ -5051,7 +5051,7 @@ LODGroup:
     renderers:
     - renderer: {fileID: 23557692965381650}
     - renderer: {fileID: 199956874217308870}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!135 &2366119673273863367
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -1,8 +1,6 @@
 using System.Collections;
-
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class CircleMovation : MonoBehaviour
 {
@@ -12,12 +10,12 @@ public class CircleMovation : MonoBehaviour
     private GameManager gameManager;
     private ShowInformation showInformation;
     private bool checkShowInf = false;
-
     public Slider changeSpeedCamera;
     public LineRenderer orbit;
     public int currentIndex = 0;
     private int indexMax = 500;
     private bool startMove = false;
+
     void Start()
     {
         showInformation = GameObject.FindWithTag("UiManager").GetComponent<ShowInformation>();
@@ -30,29 +28,39 @@ public class CircleMovation : MonoBehaviour
         yield return new WaitForSeconds(1);
         startMove = true;
     }
+
     void Update()
     {
         if (startMove)
         {
             SliderController();
             ChangeSpeedCameraSlier();
-            angle += 0.05f * gameManager.listPlanetInformations[transform.name].speed * 1 / 3;
+            angle += 0.03f * gameManager.listPlanetInformations[transform.name].speed * 1 / 3;
             x = Mathf.Cos(angle) * gameManager.listPlanetInformations[transform.name].width * gameManager.scale;
             y = Mathf.Sin(angle) * gameManager.listPlanetInformations[transform.name].height * gameManager.scale;
             transform.position = new Vector3(x, y, z);
             Draw(transform.position);
             transform.rotation *= Quaternion.Euler(Vector3.left * gameManager.listPlanetInformations[name].speed);
-            if (gameManager.checkShowInf && gameManager.nameActive == this.name)
+            if (gameManager.checkShowInf && gameManager.nameActive == name)
             {
-                showInformation.name.rectTransform.transform.position = Camera.main.WorldToScreenPoint(transform.position) + showInformation.positionNameActive;
+                showInformation.name.rectTransform.transform.position =
+                    Camera.main.WorldToScreenPoint(transform.position) + showInformation.positionNameActive;
             }
-            if (gameManager.isDrawAgain && name == gameManager.nameActive)
+
+            if (gameManager.isDrawAgainAll && gameManager.countPlanetDrew < 9)
             {
+                gameManager.countPlanetDrew++;
                 DrawAgain();
-                gameManager.isDrawAgain = false;
+            }
+            else
+            {
+                if (gameManager.isDrawAgain && name == gameManager.nameActive)
+                {
+                    DrawAgain();
+                    gameManager.isDrawAgain = false;
+                }    
             }
         }
-        
     }
 
     private void OnMouseDown()
@@ -67,13 +75,13 @@ public class CircleMovation : MonoBehaviour
         if (gameManager.nameActive != "")
         {
             gameManager.slider.value = gameManager.listPlanetInformations[gameManager.nameActive].speed;
-
+            gameManager.upHeight.value = gameManager.listPlanetInformations[gameManager.nameActive].height;
+            gameManager.upWidth.value = gameManager.listPlanetInformations[gameManager.nameActive].width;
         }
 
         if (Input.GetMouseButtonDown(0))
         {
             CastRay();
-            
         }
     }
 
@@ -105,21 +113,18 @@ public class CircleMovation : MonoBehaviour
             gameManager.nameActive = raycastHit.transform.name;
             if (gameManager.nameActive == name)
             {
-
-                gameManager.upHeight.maxValue = gameManager.listPlanetInformations[gameManager.nameActive].distaneWithSun * 2;
+                gameManager.upHeight.maxValue =
+                    gameManager.listPlanetInformations[gameManager.nameActive].distaneWithSun * 2;
                 gameManager.upHeight.minValue = 0;
-                gameManager.upHeight.value = gameManager.listPlanetInformations[gameManager.nameActive].height;
+                gameManager.upHeight.value = gameManager.listPlanetInformationsTmp[gameManager.nameActive].height;
 
-                gameManager.upWidth.maxValue = gameManager.listPlanetInformations[gameManager.nameActive].distaneWithSun * 2;
-                gameManager.upWidth.minValue = 0; 
-                gameManager.upWidth.value = gameManager.listPlanetInformations[gameManager.nameActive].width;
-
+                gameManager.upWidth.maxValue =
+                    gameManager.listPlanetInformations[gameManager.nameActive].distaneWithSun * 2;
+                gameManager.upWidth.minValue = 0;
+                gameManager.upWidth.value = gameManager.listPlanetInformationsTmp[gameManager.nameActive].width;
             }
-            
         }
     }
-
-    
 
     public void Draw(Vector3 drawPosition)
     {
@@ -133,8 +138,9 @@ public class CircleMovation : MonoBehaviour
 
     public void DrawAgain()
     {
-        orbit.positionCount = 0;
-        currentIndex = 0;
-        indexMax = 1000;
+            orbit.positionCount = 0;
+            currentIndex = 0;
+            indexMax = 1000;
     }
+
 }

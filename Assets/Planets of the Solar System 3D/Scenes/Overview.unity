@@ -4039,6 +4039,9 @@ MonoBehaviour:
   moveY3D: 0
   prevSpeed: 0
   count: 0
+  isDrawAgainAll: 0
+  countPlanetDrew: 0
+  firtCheck: 1
   helper: {fileID: 1262270849}
 --- !u!4 &1262270848
 Transform:

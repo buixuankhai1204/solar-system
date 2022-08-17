@@ -147,7 +147,7 @@ LODGroup:
     - renderer: {fileID: 23506883498154470}
     - renderer: {fileID: 23162402637312718}
     - renderer: {fileID: 199907745297058340}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!135 &7568472841969023686
 SphereCollider:
   m_ObjectHideFlags: 0

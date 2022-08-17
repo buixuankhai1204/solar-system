@@ -4968,7 +4968,7 @@ LODGroup:
     renderers:
     - renderer: {fileID: 23090388759196626}
     - renderer: {fileID: 199987257424377576}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!135 &4878998461253096602
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4999,7 +4999,7 @@ MonoBehaviour:
   distaneWithSun: 50
   width: 50
   height: 50
-  speed: 4.8826838
+  speed: 4
   longDescription: "Tr\xE1i \u0110\u1EA5t hay \u0110\u1ECBa C\u1EA7u (ch\u1EEF H\xE1n:
     \u5730\u7403, ti\u1EBFng Anh: Earth), l\xE0 h\xE0nh tinh th\u1EE9 ba t\xEDnh
     t\u1EEB M\u1EB7t Tr\u1EDDi, \u0111\u1ED3ng th\u1EDDi c\u0169ng l\xE0 h\xE0nh

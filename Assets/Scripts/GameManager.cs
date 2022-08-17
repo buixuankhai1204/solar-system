@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -38,6 +35,9 @@ public class GameManager : MonoBehaviour
     public bool moveY3D = false;
     public float prevSpeed;
     public int count;
+    public bool isDrawAgainAll;
+    public int countPlanetDrew = 0;
+    public bool firtCheck = true;
 
     public helper helper;
     // public bool checkSecondShowSpeed;
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
         showInformation = GameObject.FindWithTag("UiManager").GetComponent<ShowInformation>();
         camera.fieldOfView = 15f;
         listPlanetInformations = new Dictionary<string, PlanetInformation>();
-        listPlanetInformationsTmp = new Dictionary<string, PlanetInformation>();
+
         foreach (var planetInformation in list.PlanetsInformation)
         {
             listPlanetInformations.Add(planetInformation.tag, planetInformation);
@@ -57,11 +57,9 @@ public class GameManager : MonoBehaviour
             GameObject.Find(planetInformation.tag).transform.rotation =
                 Quaternion.Euler(0, 0, listPlanetInformations[planetInformation.tag].rotary);
         }
-
-        foreach (var planetInformation in list.PlanetsInformationTmp)
-        {
-            listPlanetInformationsTmp.Add(planetInformation.tag, planetInformation);
-        }
+        listPlanetInformationsTmp = CloneDictionaryCloningValues(listPlanetInformations);
+        ResetAll();
+        ResetOne();
     }
 
     private void Update()
@@ -307,7 +305,6 @@ public class GameManager : MonoBehaviour
                 }
 
                 moveY3D = false;
-                Debug.Log(DegY);
                 Quaternion newRotation;
                 newRotation = camera.transform.rotation * Quaternion.Euler(new Vector3(DegX,
                     DegY, 0) * Time.deltaTime);
@@ -350,22 +347,45 @@ public class GameManager : MonoBehaviour
 
     public void ResetAll()
     {
+        countPlanetDrew = 0;
         resetAll.onClick.AddListener(delegate
         {
-            listPlanetInformations = listPlanetInformationsTmp;
+            Debug.Log("a");
+            listPlanetInformations = CloneDictionaryCloningValues(listPlanetInformationsTmp);
+            isDrawAgainAll = true;
         });
     }
 
     public void ResetOne()
     {
-        if (nameActive != null)
+        if (nameActive == "" && firtCheck == false)
         {
             return;
         }
 
+        firstCheck = false;
         resetOne.onClick.AddListener(delegate
         {
-            listPlanetInformations[nameActive] = listPlanetInformationsTmp[nameActive];
+            listPlanetInformations[nameActive] = CloneDictionaryCloningValue(listPlanetInformationsTmp[nameActive]);
+            isDrawAgain = true;
+
         });
+    }
+    public static Dictionary<TKey, TValue> CloneDictionaryCloningValues<TKey, TValue>
+        (Dictionary<TKey, TValue> original) where TValue : ICloneable
+    {
+        Dictionary<TKey, TValue> ret = new Dictionary<TKey, TValue>(original.Count,
+            original.Comparer);
+        foreach (KeyValuePair<TKey, TValue> entry in original)
+        {
+            ret.Add(entry.Key, (TValue) entry.Value.Clone());
+        }
+        return ret;
+    }
+    
+    public  TValue CloneDictionaryCloningValue< TValue>
+        (TValue original) where TValue : ICloneable
+    {
+        return (TValue)original.Clone();
     }
 }
