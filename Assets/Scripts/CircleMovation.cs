@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,12 +10,14 @@ public class CircleMovation : MonoBehaviour
     private PlanetInformation planetInformation;
     private GameManager gameManager;
     private ShowInformation showInformation;
-    private bool checkShowInf = false;
     public Slider changeSpeedCamera;
     public LineRenderer orbit;
     public int currentIndex = 0;
-    private int indexMax = 500;
-    private bool startMove = false;
+    private int indexMax = 1000;
+    private bool startMove;
+    private int count;
+    private float prevWidth;
+    private float prevHeight;
 
     void Start()
     {
@@ -33,6 +36,17 @@ public class CircleMovation : MonoBehaviour
     {
         if (startMove)
         {
+            if (prevHeight != gameManager.listPlanetInformations[transform.name].width)
+            {
+                gameManager.isDrawAgain = true;
+                prevHeight = gameManager.listPlanetInformations[transform.name].width;
+            }
+            
+            if (prevWidth != gameManager.listPlanetInformations[transform.name].height)
+            {
+                gameManager.isDrawAgain = true;
+                prevWidth = gameManager.listPlanetInformations[transform.name].height;
+            }
             SliderController();
             ChangeSpeedCameraSlier();
             angle += 0.03f * gameManager.listPlanetInformations[transform.name].speed * 1 / 3;
@@ -52,13 +66,10 @@ public class CircleMovation : MonoBehaviour
                 gameManager.countPlanetDrew++;
                 DrawAgain();
             }
-            else
+            else if (gameManager.isDrawAgain && gameManager.nameActive == name)
             {
-                if (gameManager.isDrawAgain && name == gameManager.nameActive)
-                {
-                    DrawAgain();
-                    gameManager.isDrawAgain = false;
-                }    
+                DrawAgain();
+                gameManager.isDrawAgain = false;
             }
         }
     }
@@ -67,22 +78,17 @@ public class CircleMovation : MonoBehaviour
     {
         gameManager.checkShowInf = true;
         showInformation.ShowInformationPlanet(transform.gameObject.name, this.gameObject);
+        if (Input.GetButtonDown("Fire1"))
+        {
+            CastRay();
+        }
+        gameManager.firtsCheckName = false;
     }
 
     public void SliderController()
     {
         gameManager.slider.onValueChanged.AddListener((arg0 => ScrollbarCallback(arg0)));
-        if (gameManager.nameActive != "")
-        {
-            gameManager.slider.value = gameManager.listPlanetInformations[gameManager.nameActive].speed;
-            gameManager.upHeight.value = gameManager.listPlanetInformations[gameManager.nameActive].height;
-            gameManager.upWidth.value = gameManager.listPlanetInformations[gameManager.nameActive].width;
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            CastRay();
-        }
+        
     }
 
     public void ScrollbarCallback(float value)
@@ -108,20 +114,23 @@ public class CircleMovation : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit raycastHit;
-        if (Physics.Raycast(ray.origin, ray.direction, out raycastHit, Mathf.Infinity))
+        if (Physics.Raycast(ray.origin, ray.direction, out raycastHit, Mathf.Infinity) && gameManager.firtsCheckName == false)
         {
+            gameManager.prevNameActive = gameManager.CloneDictionaryCloningValue(gameManager.nameActive);
+            gameManager.firtsCheckName = true;
             gameManager.nameActive = raycastHit.transform.name;
+            
             if (gameManager.nameActive == name)
             {
-                gameManager.upHeight.maxValue =
-                    gameManager.listPlanetInformations[gameManager.nameActive].distaneWithSun * 2;
+                Debug.Log(gameManager.nameActive + "-" + gameManager.prevNameActive);
                 gameManager.upHeight.minValue = 0;
-                gameManager.upHeight.value = gameManager.listPlanetInformationsTmp[gameManager.nameActive].height;
-
-                gameManager.upWidth.maxValue =
-                    gameManager.listPlanetInformations[gameManager.nameActive].distaneWithSun * 2;
+                gameManager.upHeight.maxValue =
+                    gameManager.listPlanetInformationsTmp[raycastHit.transform.name].distaneWithSun * 2;
                 gameManager.upWidth.minValue = 0;
-                gameManager.upWidth.value = gameManager.listPlanetInformationsTmp[gameManager.nameActive].width;
+                gameManager.upWidth.maxValue =
+                    gameManager.listPlanetInformationsTmp[raycastHit.transform.name].distaneWithSun * 2;
+                gameManager.upHeight.value = gameManager.listPlanetInformations[raycastHit.transform.name].height;
+                gameManager.upWidth.value = gameManager.listPlanetInformations[raycastHit.transform.name].width;
             }
         }
     }
@@ -138,9 +147,9 @@ public class CircleMovation : MonoBehaviour
 
     public void DrawAgain()
     {
-            orbit.positionCount = 0;
-            currentIndex = 0;
-            indexMax = 1000;
+        orbit.positionCount = 0;
+        currentIndex = 0;
+        indexMax = 1000;
     }
 
 }

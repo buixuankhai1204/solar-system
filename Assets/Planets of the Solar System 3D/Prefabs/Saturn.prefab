@@ -178,7 +178,7 @@ MonoBehaviour:
   distaneWithSun: 475
   width: 475
   height: 475
-  speed: 5
+  speed: 7
   longDescription: "Sao Th\u1ED5 (Saturn) t\u1EE9c Th\u1ED5 tinh (ch\u1EEF H\xE1n:
     \u571F\u661F) l\xE0 h\xE0nh tinh th\u1EE9 s\xE1u t\xEDnh theo kho\u1EA3ng c\xE1ch
     trung b\xECnh t\u1EEB M\u1EB7t Tr\u1EDDi v\xE0 l\xE0 h\xE0nh tinh l\u1EDBn th\u1EE9

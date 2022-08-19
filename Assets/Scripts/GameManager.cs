@@ -31,16 +31,14 @@ public class GameManager : MonoBehaviour
     public Button resetAll;
     public Button resetOne;
     public string nameActive;
-    public bool isDrawAgain = false;
-    public bool moveY3D = false;
+    public bool isDrawAgain;
+    public bool moveY3D;
     public float prevSpeed;
     public int count;
     public bool isDrawAgainAll;
-    public int countPlanetDrew = 0;
-    public bool firtCheck = true;
-
-    public helper helper;
-    // public bool checkSecondShowSpeed;
+    public int countPlanetDrew;
+    public string prevNameActive;
+    public bool firtsCheckName;
 
 
     void Start()
@@ -49,21 +47,25 @@ public class GameManager : MonoBehaviour
         showInformation = GameObject.FindWithTag("UiManager").GetComponent<ShowInformation>();
         camera.fieldOfView = 15f;
         listPlanetInformations = new Dictionary<string, PlanetInformation>();
+        listPlanetInformationsTmp = new Dictionary<string, PlanetInformation>();
 
         foreach (var planetInformation in list.PlanetsInformation)
         {
             listPlanetInformations.Add(planetInformation.tag, planetInformation);
-
-            GameObject.Find(planetInformation.tag).transform.rotation =
+            GameObject.Find(planetInformation.tag).transform.rotation = 
                 Quaternion.Euler(0, 0, listPlanetInformations[planetInformation.tag].rotary);
         }
         listPlanetInformationsTmp = CloneDictionaryCloningValues(listPlanetInformations);
-        ResetAll();
         ResetOne();
+        ResetAll();
     }
 
     private void Update()
     {
+        if (nameActive != "")
+        {
+            slider.value = listPlanetInformations[nameActive].speed;
+        }
         if (Input.GetButton("Fire2") && Input.mouseScrollDelta != Vector2.zero)
         {
             ChangeSpeedCamera();
@@ -93,11 +95,11 @@ public class GameManager : MonoBehaviour
     {
         if (!changeValueView)
         {
-            FreeCamera2D();
+            FreeCamera2D("Fire2");
         }
         else
         {
-            FreeCamera3D();
+            FreeCamera3D("Fire3");
         }
     }
 
@@ -136,20 +138,27 @@ public class GameManager : MonoBehaviour
         changeValueView = value;
     }
 
-    public void FreeCamera3D()
+    public void FreeCamera3D(string inputName)
     {
-        PositionCamera3D();
-        RotationCamera3D();
+        if (Input.GetKey(KeyCode.Mouse2))
+        {
+            FreeCamera2D(inputName);
+        }
+        else
+        {
+            PositionCamera3D();
+            RotationCamera3D();
+        }
     }
 
-    public void FreeCamera2D()
+    public void FreeCamera2D(string inputName)
     {
-        if (!Input.GetButton("Fire2"))
+        if (!Input.GetButton(inputName))
         {
             firstCheck = true;
         }
 
-        if (Input.GetButton("Fire2"))
+        if (Input.GetButton(inputName))
         {
             if (firstCheck)
             {
@@ -326,8 +335,17 @@ public class GameManager : MonoBehaviour
 
         upWidth.onValueChanged.AddListener(arg0 =>
         {
-            listPlanetInformations[nameActive].width = arg0;
-            isDrawAgain = true;
+            if (nameActive == prevNameActive)
+            {
+                isDrawAgain = false;
+            }
+            else
+            {
+                if (arg0 < listPlanetInformations[nameActive].distaneWithSun * 2)
+                {
+                    listPlanetInformations[nameActive].width = arg0;
+                }
+            }
         });
     }
 
@@ -340,17 +358,27 @@ public class GameManager : MonoBehaviour
 
         upHeight.onValueChanged.AddListener(arg0 =>
         {
-            listPlanetInformations[nameActive].height = arg0;
-            isDrawAgain = true;
+            if (nameActive == prevNameActive)
+            {
+                isDrawAgain = false;
+            }
+            else
+            {
+                if (arg0 < listPlanetInformations[nameActive].distaneWithSun * 2)
+                {
+                    listPlanetInformations[nameActive].height = arg0;
+                }
+            }
         });
     }
 
     public void ResetAll()
     {
         countPlanetDrew = 0;
+        Debug.Log("ngoai reset all");
         resetAll.onClick.AddListener(delegate
         {
-            Debug.Log("a");
+            Debug.Log("trong reset all");
             listPlanetInformations = CloneDictionaryCloningValues(listPlanetInformationsTmp);
             isDrawAgainAll = true;
         });
@@ -358,19 +386,20 @@ public class GameManager : MonoBehaviour
 
     public void ResetOne()
     {
-        if (nameActive == "" && firtCheck == false)
+        if (nameActive == "")
         {
             return;
         }
 
-        firstCheck = false;
+        Debug.Log("ngoai reset one");
         resetOne.onClick.AddListener(delegate
         {
+            Debug.Log("trong reset one");
             listPlanetInformations[nameActive] = CloneDictionaryCloningValue(listPlanetInformationsTmp[nameActive]);
             isDrawAgain = true;
-
         });
     }
+
     public static Dictionary<TKey, TValue> CloneDictionaryCloningValues<TKey, TValue>
         (Dictionary<TKey, TValue> original) where TValue : ICloneable
     {
@@ -378,12 +407,13 @@ public class GameManager : MonoBehaviour
             original.Comparer);
         foreach (KeyValuePair<TKey, TValue> entry in original)
         {
-            ret.Add(entry.Key, (TValue) entry.Value.Clone());
+            ret.Add(entry.Key, (TValue)entry.Value.Clone());
         }
+
         return ret;
     }
-    
-    public  TValue CloneDictionaryCloningValue< TValue>
+
+    public TValue CloneDictionaryCloningValue<TValue>
         (TValue original) where TValue : ICloneable
     {
         return (TValue)original.Clone();

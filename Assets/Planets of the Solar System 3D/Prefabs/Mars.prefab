@@ -4916,7 +4916,7 @@ MonoBehaviour:
   distaneWithSun: 75
   width: 75
   height: 75
-  speed: 5
+  speed: 6
   longDescription: "Sao H\u1ECFa hay H\u1ECFa tinh (ch\u1EEF H\xE1n: \u706B\u661F,
     ti\u1EBFng Anh: Mars) l\xE0 h\xE0nh tinh th\u1EE9 t\u01B0 t\xEDnh t\u1EEB M\u1EB7t
     Tr\u1EDDi v\xE0 l\xE0 h\xE0nh tinh c\xF3 k\xEDch th\u01B0\u1EDBc b\xE9 th\u1EE9

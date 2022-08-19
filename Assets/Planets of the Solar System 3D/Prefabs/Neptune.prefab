@@ -5082,7 +5082,7 @@ MonoBehaviour:
   distaneWithSun: 1500
   width: 1500
   height: 1500
-  speed: 5
+  speed: 2
   longDescription: "Sao H\u1EA3i V\u01B0\u01A1ng (Neptune) hay H\u1EA3i V\u01B0\u01A1ng
     tinh (ch\u1EEF H\xE1n: \u6D77\u738B\u661F) l\xE0 h\xE0nh tinh th\u1EE9 t\xE1m
     v\xE0 xa nh\u1EA5t t\xEDnh t\u1EEB M\u1EB7t Tr\u1EDDi trong H\u1EC7 M\u1EB7t
