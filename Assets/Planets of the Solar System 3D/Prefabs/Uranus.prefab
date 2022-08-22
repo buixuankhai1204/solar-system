@@ -94,13 +94,12 @@ MonoBehaviour:
   distaneWithSun: 980
   width: 980
   height: 980
-  speed: 7
+  speed: 2
   longDescription: "Sao Thi\xEAn V\u01B0\u01A1ng (Uranus) hay Thi\xEAn V\u01B0\u01A1ng
-    tinh (ch\u1EEF H\xE1n: \u5929\u738B\u661F) l\xE0 h\xE0nh tinh th\u1EE9 b\u1EA3y
-    t\xEDnh t\u1EEB M\u1EB7t Tr\u1EDDi; l\xE0 h\xE0nh tinh c\xF3 b\xE1n k\xEDnh l\u1EDBn
-    th\u1EE9 ba v\xE0 c\xF3 kh\u1ED1i l\u01B0\u1EE3ng l\u1EDBn th\u1EE9 t\u01B0 trong
-    H\u1EC7 M\u1EB7t Tr\u1EDDi."
-  element: "ch\u1EE9a ch\u1EE7 y\u1EBFu m\u1ED9t l\xF5i b\u0103ng v\xE0 \u0111\xE1.[8]"
+    tinh l\xE0 h\xE0nh tinh th\u1EE9 b\u1EA3y t\xEDnh t\u1EEB M\u1EB7t Tr\u1EDDi;
+    l\xE0 h\xE0nh tinh c\xF3 b\xE1n k\xEDnh l\u1EDBn th\u1EE9 ba v\xE0 c\xF3 kh\u1ED1i
+    l\u01B0\u1EE3ng l\u1EDBn th\u1EE9 t\u01B0 trong H\u1EC7 M\u1EB7t Tr\u1EDDi."
+  element: "Ch\u1EE9a ch\u1EE7 y\u1EBFu m\u1ED9t l\xF5i b\u0103ng v\xE0 \u0111\xE1."
   size: 0
   rotary: 97.77
   speedrotation: 2.59

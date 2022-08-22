@@ -4999,12 +4999,12 @@ MonoBehaviour:
   distaneWithSun: 260
   width: 260
   height: 260
-  speed: 1
-  longDescription: "Sao M\u1ED9c (Jupiter) hay M\u1ED9c tinh (ch\u1EEF H\xE1n: \u6728\u661F)
-    l\xE0 h\xE0nh tinh th\u1EE9 n\u0103m t\xEDnh t\u1EEB M\u1EB7t Tr\u1EDDi v\xE0
-    l\xE0 h\xE0nh tinh l\u1EDBn nh\u1EA5t trong H\u1EC7 M\u1EB7t Tr\u1EDDi."
-  element: " h\xE0nh tinh \u0111\xE1, nh\u01B0 n\xFAi l\u1EEDa v\xE0 nhi\u1EC7t l\u01B0\u1EE3ng
-    t\u1EEB b\xEAn trong"
+  speed: 4
+  longDescription: "Sao M\u1ED9c (Jupiter) hay M\u1ED9c tinh l\xE0 h\xE0nh tinh th\u1EE9
+    n\u0103m t\xEDnh t\u1EEB M\u1EB7t Tr\u1EDDi v\xE0 l\xE0 h\xE0nh tinh l\u1EDBn
+    nh\u1EA5t trong H\u1EC7 M\u1EB7t Tr\u1EDDi."
+  element: "H\xE0nh tinh \u0111\xE1, nh\u01B0 n\xFAi l\u1EEDa v\xE0 nhi\u1EC7t l\u01B0\u1EE3ng
+    t\u1EEB b\xEAn trong."
   size: 0
   rotary: 3.13
   speedrotation: 12.6

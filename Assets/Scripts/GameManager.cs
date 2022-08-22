@@ -283,7 +283,6 @@ public class GameManager : MonoBehaviour
             angle = Mathf.Sin(yDistance / distance);
             if (angle > 0.78f)
             {
-                // Debug.Log("angle: " + angle);
                 angle = Mathf.Asin(yDistance / distance);
                 moveY3D = true;
                 DegY = 0;
@@ -375,10 +374,8 @@ public class GameManager : MonoBehaviour
     public void ResetAll()
     {
         countPlanetDrew = 0;
-        Debug.Log("ngoai reset all");
         resetAll.onClick.AddListener(delegate
         {
-            Debug.Log("trong reset all");
             listPlanetInformations = CloneDictionaryCloningValues(listPlanetInformationsTmp);
             isDrawAgainAll = true;
         });
@@ -391,10 +388,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("ngoai reset one");
         resetOne.onClick.AddListener(delegate
         {
-            Debug.Log("trong reset one");
             listPlanetInformations[nameActive] = CloneDictionaryCloningValue(listPlanetInformationsTmp[nameActive]);
             isDrawAgain = true;
         });

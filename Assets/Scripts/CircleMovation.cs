@@ -122,7 +122,6 @@ public class CircleMovation : MonoBehaviour
             
             if (gameManager.nameActive == name)
             {
-                Debug.Log(gameManager.nameActive + "-" + gameManager.prevNameActive);
                 gameManager.upHeight.minValue = 0;
                 gameManager.upHeight.maxValue =
                     gameManager.listPlanetInformationsTmp[raycastHit.transform.name].distaneWithSun * 2;

@@ -178,13 +178,13 @@ MonoBehaviour:
   distaneWithSun: 475
   width: 475
   height: 475
-  speed: 7
-  longDescription: "Sao Th\u1ED5 (Saturn) t\u1EE9c Th\u1ED5 tinh (ch\u1EEF H\xE1n:
-    \u571F\u661F) l\xE0 h\xE0nh tinh th\u1EE9 s\xE1u t\xEDnh theo kho\u1EA3ng c\xE1ch
-    trung b\xECnh t\u1EEB M\u1EB7t Tr\u1EDDi v\xE0 l\xE0 h\xE0nh tinh l\u1EDBn th\u1EE9
-    hai v\u1EC1 \u0111\u01B0\u1EDDng k\xEDnh c\u0169ng nh\u01B0 kh\u1ED1i l\u01B0\u1EE3ng,
-    sau Sao M\u1ED9c trong H\u1EC7 M\u1EB7t Tr\u1EDDi."
-  element: "ch\u1EE9a b\u1EE5i c\u0169ng nh\u01B0 c\xE1c h\u1EA1t b\u0103ng v\xE0
+  speed: 2
+  longDescription: "Sao Th\u1ED5 (Saturn) t\u1EE9c Th\u1ED5 tinh l\xE0 h\xE0nh tinh
+    th\u1EE9 s\xE1u t\xEDnh theo kho\u1EA3ng c\xE1ch trung b\xECnh t\u1EEB M\u1EB7t
+    Tr\u1EDDi v\xE0 l\xE0 h\xE0nh tinh l\u1EDBn th\u1EE9 hai v\u1EC1 \u0111\u01B0\u1EDDng
+    k\xEDnh c\u0169ng nh\u01B0 kh\u1ED1i l\u01B0\u1EE3ng, sau Sao M\u1ED9c trong
+    H\u1EC7 M\u1EB7t Tr\u1EDDi."
+  element: "Ch\u1EE9a b\u1EE5i c\u0169ng nh\u01B0 c\xE1c h\u1EA1t b\u0103ng v\xE0
     \u0111\xE1 nh\u1ECF."
   size: 0
   rotary: 26.73

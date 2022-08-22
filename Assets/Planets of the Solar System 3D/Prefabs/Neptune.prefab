@@ -5082,13 +5082,13 @@ MonoBehaviour:
   distaneWithSun: 1500
   width: 1500
   height: 1500
-  speed: 2
+  speed: 3
   longDescription: "Sao H\u1EA3i V\u01B0\u01A1ng (Neptune) hay H\u1EA3i V\u01B0\u01A1ng
-    tinh (ch\u1EEF H\xE1n: \u6D77\u738B\u661F) l\xE0 h\xE0nh tinh th\u1EE9 t\xE1m
-    v\xE0 xa nh\u1EA5t t\xEDnh t\u1EEB M\u1EB7t Tr\u1EDDi trong H\u1EC7 M\u1EB7t
-    Tr\u1EDDi. N\xF3 l\xE0 h\xE0nh tinh l\u1EDBn th\u1EE9 t\u01B0 v\u1EC1 \u0111\u01B0\u1EDDng
-    k\xEDnh v\xE0 l\u1EDBn th\u1EE9 ba v\u1EC1 kh\u1ED1i l\u01B0\u1EE3ng."
-  element: "ch\u1EE9a ch\u1EE7 y\u1EBFu m\u1ED9t l\xF5i b\u0103ng v\xE0 \u0111\xE1.[8]"
+    tinh l\xE0 h\xE0nh tinh th\u1EE9 t\xE1m v\xE0 xa nh\u1EA5t t\xEDnh t\u1EEB M\u1EB7t
+    Tr\u1EDDi trong H\u1EC7 M\u1EB7t Tr\u1EDDi. N\xF3 l\xE0 h\xE0nh tinh l\u1EDBn
+    th\u1EE9 t\u01B0 v\u1EC1 \u0111\u01B0\u1EDDng k\xEDnh v\xE0 l\u1EDBn th\u1EE9
+    ba v\u1EC1 kh\u1ED1i l\u01B0\u1EE3ng."
+  element: "Ch\u1EE9a ch\u1EE7 y\u1EBFu m\u1ED9t l\xF5i b\u0103ng v\xE0 \u0111\xE1.[8]"
   size: 0
   rotary: 28.32
   speedrotation: 2.68

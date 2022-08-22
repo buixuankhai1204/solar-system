@@ -5000,13 +5000,13 @@ MonoBehaviour:
   width: 50
   height: 50
   speed: 3
-  longDescription: "Tr\xE1i \u0110\u1EA5t hay \u0110\u1ECBa C\u1EA7u (ch\u1EEF H\xE1n:
-    \u5730\u7403, ti\u1EBFng Anh: Earth), l\xE0 h\xE0nh tinh th\u1EE9 ba t\xEDnh
-    t\u1EEB M\u1EB7t Tr\u1EDDi, \u0111\u1ED3ng th\u1EDDi c\u0169ng l\xE0 h\xE0nh
-    tinh l\u1EDBn nh\u1EA5t trong c\xE1c h\xE0nh tinh \u0111\u1EA5t \u0111\xE1 c\u1EE7a
-    h\u1EC7 M\u1EB7t Tr\u1EDDi x\xE9t v\u1EC1 b\xE1n k\xEDnh, kh\u1ED1i l\u01B0\u1EE3ng
-    v\xE0 m\u1EADt \u0111\u1ED9 c\u1EE7a v\u1EADt ch\u1EA5t."
-  element: "\u0111\u1EA5t, c\xE1t"
+  longDescription: "Tr\xE1i \u0110\u1EA5t hay \u0110\u1ECBa C\u1EA7u (ti\u1EBFng
+    Anh: Earth), l\xE0 h\xE0nh tinh th\u1EE9 ba t\xEDnh t\u1EEB M\u1EB7t Tr\u1EDDi,
+    \u0111\u1ED3ng th\u1EDDi c\u0169ng l\xE0 h\xE0nh tinh l\u1EDBn nh\u1EA5t trong
+    c\xE1c h\xE0nh tinh \u0111\u1EA5t \u0111\xE1 c\u1EE7a h\u1EC7 M\u1EB7t Tr\u1EDDi
+    x\xE9t v\u1EC1 b\xE1n k\xEDnh, kh\u1ED1i l\u01B0\u1EE3ng v\xE0 m\u1EADt \u0111\u1ED9
+    c\u1EE7a v\u1EADt ch\u1EA5t."
+  element: "\u0110\u1EA5t, c\xE1t."
   size: 15000
   rotary: 23.43928
   speedrotation: 1674.38

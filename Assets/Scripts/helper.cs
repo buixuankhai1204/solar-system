@@ -6,6 +6,5 @@ public class helper : MonoBehaviour
     public static void DumpToConsole(object obj)
     {
         var output = JsonUtility.ToJson(obj, true);
-        Debug.Log(output);
     }
 }

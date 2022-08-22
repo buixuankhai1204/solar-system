@@ -4917,11 +4917,11 @@ MonoBehaviour:
   width: 75
   height: 75
   speed: 6
-  longDescription: "Sao H\u1ECFa hay H\u1ECFa tinh (ch\u1EEF H\xE1n: \u706B\u661F,
-    ti\u1EBFng Anh: Mars) l\xE0 h\xE0nh tinh th\u1EE9 t\u01B0 t\xEDnh t\u1EEB M\u1EB7t
-    Tr\u1EDDi v\xE0 l\xE0 h\xE0nh tinh c\xF3 k\xEDch th\u01B0\u1EDBc b\xE9 th\u1EE9
-    hai trong H\u1EC7 M\u1EB7t Tr\u1EDDi, ch\u1EC9 l\u1EDBn h\u01A1n Sao Th\u1EE7y."
-  element: "c\u1EA5u t\u1EA1o g\u1EA7n gi\u1ED1ng Tr\xE1i \u0110\u1EA5t"
+  longDescription: "Sao H\u1ECFa hay H\u1ECFa tinh (ti\u1EBFng Anh: Mars) l\xE0 h\xE0nh
+    tinh th\u1EE9 t\u01B0 t\xEDnh t\u1EEB M\u1EB7t Tr\u1EDDi v\xE0 l\xE0 h\xE0nh
+    tinh c\xF3 k\xEDch th\u01B0\u1EDBc b\xE9 th\u1EE9 hai trong H\u1EC7 M\u1EB7t
+    Tr\u1EDDi, ch\u1EC9 l\u1EDBn h\u01A1n Sao Th\u1EE7y."
+  element: "C\u1EA5u t\u1EA1o g\u1EA7n gi\u1ED1ng Tr\xE1i \u0110\u1EA5t."
   size: 0
   rotary: 25.19
   speedrotation: 0.2
