@@ -8,6 +8,7 @@ public class ShowInformation : MonoBehaviour
     public TextMeshProUGUI name;
     public TextMeshProUGUI nameSpeed;
     public TextMeshProUGUI size;
+    public TextMeshProUGUI Radius;
     public TextMeshProUGUI element;
     public TextMeshProUGUI longDescription;
     public TextMeshProUGUI rotary;
@@ -36,7 +37,8 @@ public class ShowInformation : MonoBehaviour
                 this.size.text = planet.Value.size.ToString();
                 this.element.text = planet.Value.element;
                 this.longDescription.text = planet.Value.longDescription;
-                this.rotary.text = planet.Value.rotary.ToString();
+                this.rotary.text = planet.Value.rotary.ToString() + " độ";
+                this.Radius.text = planet.Value.radius;
             }
         }
     }

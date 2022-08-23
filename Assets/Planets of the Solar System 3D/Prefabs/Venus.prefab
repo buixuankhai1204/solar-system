@@ -111,7 +111,7 @@ Transform:
   m_GameObject: {fileID: 1647581975099426}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4463993732138566}
@@ -172,16 +172,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Sao Kim
   tag: Venus
-  distaneWithSun: 35
-  width: 35
-  height: 35
-  speed: 3.382815
+  distaneWithSun: 70
+  width: 56.46985
+  height: 62.46985
+  speed: 2
   longDescription: "Sao Kim (Kim tinh, c\xF2n g\u1ECDi l\xE0 sao Th\xE1i B\u1EA1ch,
     Th\xE1i B\u1EA1ch Kim tinh, ti\u1EBFng Anh: Venus) l\xE0 h\xE0nh tinh th\u1EE9
     2 trong h\u1EC7 M\u1EB7t Tr\u1EDDi, t\u1EF1 quay quanh n\xF3 v\u1EDBi chu k\u1EF3
     224,7 ng\xE0y Tr\xE1i \u0110\u1EA5t."
   element: "Th\xE0nh ph\u1EA7n ch\u1EE7 y\u1EBFu l\xE0 cacbon dioxide."
-  size: 0
+  size: 0.9
+  radius: 6.051.8 Km
   rotary: 177.3
   speedrotation: 6.52
 --- !u!1 &1741346461429698

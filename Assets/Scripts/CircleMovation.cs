@@ -13,11 +13,13 @@ public class CircleMovation : MonoBehaviour
     public Slider changeSpeedCamera;
     public LineRenderer orbit;
     public int currentIndex = 0;
-    private int indexMax = 1000;
+    public float indexMax = 10000;
     private bool startMove;
     private int count;
     private float prevWidth;
     private float prevHeight;
+    private bool firstClick = true;
+    public float tmp;
 
     void Start()
     {
@@ -36,25 +38,34 @@ public class CircleMovation : MonoBehaviour
     {
         if (startMove)
         {
-            if (prevHeight != gameManager.listPlanetInformations[transform.name].width)
+            if (prevWidth != gameManager.listPlanetInformations[transform.name].width)
             {
                 gameManager.isDrawAgain = true;
-                prevHeight = gameManager.listPlanetInformations[transform.name].width;
+                prevWidth = gameManager.listPlanetInformations[transform.name].width;
             }
             
-            if (prevWidth != gameManager.listPlanetInformations[transform.name].height)
+            
+            if (prevHeight != gameManager.listPlanetInformations[transform.name].height)
             {
                 gameManager.isDrawAgain = true;
-                prevWidth = gameManager.listPlanetInformations[transform.name].height;
+                prevHeight = gameManager.listPlanetInformations[transform.name].height;
             }
             SliderController();
             ChangeSpeedCameraSlier();
             angle += 0.03f * gameManager.listPlanetInformations[transform.name].speed * 1 / 3;
             x = Mathf.Cos(angle) * gameManager.listPlanetInformations[transform.name].width * gameManager.scale;
             y = Mathf.Sin(angle) * gameManager.listPlanetInformations[transform.name].height * gameManager.scale;
-            transform.position = new Vector3(x, y, z);
-            Draw(transform.position);
-            transform.rotation *= Quaternion.Euler(Vector3.left * gameManager.listPlanetInformations[name].speed);
+            if (transform.name == "Moon")
+            {
+                transform.position = new Vector3(GameObject.FindWithTag("Earth").transform.position.x + x,GameObject.FindWithTag("Earth").transform.position.y + y , -95f);
+            }
+            else
+            {
+                transform.position = new Vector3(x, y, z);
+                Draw(transform.position);
+                
+            }
+            transform.Rotate(Vector3.down * gameManager.listPlanetInformations[name].speed * 10f, Space.Self);
             if (gameManager.checkShowInf && gameManager.nameActive == name)
             {
                 showInformation.name.rectTransform.transform.position =
@@ -76,6 +87,11 @@ public class CircleMovation : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (firstClick)
+        {
+            firstClick = false;
+            gameManager.isDrawAgain = false;
+        }
         gameManager.checkShowInf = true;
         showInformation.ShowInformationPlanet(transform.gameObject.name, this.gameObject);
         if (Input.GetButtonDown("Fire1"))

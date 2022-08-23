@@ -4935,7 +4935,7 @@ Transform:
   m_GameObject: {fileID: 1526814149960808}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 15, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4262619043198982}
@@ -4996,16 +4996,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "Sao M\u1ED9c"
   tag: Jupiter
-  distaneWithSun: 260
-  width: 260
-  height: 260
-  speed: 4
+  distaneWithSun: 200
+  width: 200
+  height: 200
+  speed: 1.3
   longDescription: "Sao M\u1ED9c (Jupiter) hay M\u1ED9c tinh l\xE0 h\xE0nh tinh th\u1EE9
     n\u0103m t\xEDnh t\u1EEB M\u1EB7t Tr\u1EDDi v\xE0 l\xE0 h\xE0nh tinh l\u1EDBn
     nh\u1EA5t trong H\u1EC7 M\u1EB7t Tr\u1EDDi."
   element: "H\xE0nh tinh \u0111\xE1, nh\u01B0 n\xFAi l\u1EEDa v\xE0 nhi\u1EC7t l\u01B0\u1EE3ng
     t\u1EEB b\xEAn trong."
-  size: 0
+  size: 2
+  radius: 69.911 Km
   rotary: 3.13
   speedrotation: 12.6
 --- !u!1 &1739387421617238

@@ -4935,7 +4935,7 @@ Transform:
   m_GameObject: {fileID: 1733945558841920}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 9, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4517316721654034}
@@ -4996,10 +4996,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "Tr\xE1i \u0111\u1EA5t"
   tag: Earth
-  distaneWithSun: 50
-  width: 50
-  height: 50
-  speed: 3
+  distaneWithSun: 100
+  width: 100
+  height: 100
+  speed: 1.7
   longDescription: "Tr\xE1i \u0110\u1EA5t hay \u0110\u1ECBa C\u1EA7u (ti\u1EBFng
     Anh: Earth), l\xE0 h\xE0nh tinh th\u1EE9 ba t\xEDnh t\u1EEB M\u1EB7t Tr\u1EDDi,
     \u0111\u1ED3ng th\u1EDDi c\u0169ng l\xE0 h\xE0nh tinh l\u1EDBn nh\u1EA5t trong
@@ -5007,8 +5007,9 @@ MonoBehaviour:
     x\xE9t v\u1EC1 b\xE1n k\xEDnh, kh\u1ED1i l\u01B0\u1EE3ng v\xE0 m\u1EADt \u0111\u1ED9
     c\u1EE7a v\u1EADt ch\u1EA5t."
   element: "\u0110\u1EA5t, c\xE1t."
-  size: 15000
-  rotary: 23.43928
+  size: 1.2
+  radius: 6.371 Km
+  rotary: 23.4392
   speedrotation: 1674.38
 --- !u!1 &1982611864615202
 GameObject:

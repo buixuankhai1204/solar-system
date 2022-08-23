@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1066320961419670}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4627341156184958}
@@ -117,14 +117,15 @@ MonoBehaviour:
   distaneWithSun: 0
   width: 0
   height: 0
-  speed: 5
+  speed: 0.5
   longDescription: "M\u1EB7t Tr\u1EDDi ch\xEDnh l\xE0 ng\xF4i sao \u1EDF trung t\xE2m
     H\u1EC7 M\u1EB7t Tr\u1EDDi, chi\u1EBFm kho\u1EA3ng 99,8% kh\u1ED1i l\u01B0\u1EE3ng
     c\u1EE7a H\u1EC7 M\u1EB7t Tr\u1EDDi. Tr\xE1i \u0110\u1EA5t v\xE0 c\xE1c thi\xEAn
     th\u1EC3 kh\xE1c nh\u01B0 c\xE1c h\xE0nh tinh, ti\u1EC3u h\xE0nh tinh, thi\xEAn
     th\u1EA1ch, sao ch\u1ED5i, v\xE0 b\u1EE5i quay quanh M\u1EB7t Tr\u1EDDi."
-  element: "Hydro chi\u1EBFm 71%, heli 27,1%, oxy 0,97%,"
-  size: 0
+  element: "Hydro chi\u1EBFm 71%, heli 27,1%, oxy 0,97%."
+  size: 4.5
+  radius: 696.000 Km
   rotary: 7.25
   speedrotation: 617.54
 --- !u!1 &1708399313684614

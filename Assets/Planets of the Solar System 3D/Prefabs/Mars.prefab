@@ -4852,7 +4852,7 @@ Transform:
   m_GameObject: {fileID: 1288793558353234}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4622294277052950}
@@ -4913,16 +4913,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "Sao H\u1ECFa"
   tag: Mars
-  distaneWithSun: 75
-  width: 75
-  height: 75
-  speed: 6
+  distaneWithSun: 130
+  width: 130
+  height: 130
+  speed: 1.1
   longDescription: "Sao H\u1ECFa hay H\u1ECFa tinh (ti\u1EBFng Anh: Mars) l\xE0 h\xE0nh
     tinh th\u1EE9 t\u01B0 t\xEDnh t\u1EEB M\u1EB7t Tr\u1EDDi v\xE0 l\xE0 h\xE0nh
     tinh c\xF3 k\xEDch th\u01B0\u1EDBc b\xE9 th\u1EE9 hai trong H\u1EC7 M\u1EB7t
     Tr\u1EDDi, ch\u1EC9 l\u1EDBn h\u01A1n Sao Th\u1EE7y."
   element: "C\u1EA5u t\u1EA1o g\u1EA7n gi\u1ED1ng Tr\xE1i \u0110\u1EA5t."
-  size: 0
+  size: 0.7
+  radius: 3.390.0 Km
   rotary: 25.19
   speedrotation: 0.2
 --- !u!1 &1299526964348990

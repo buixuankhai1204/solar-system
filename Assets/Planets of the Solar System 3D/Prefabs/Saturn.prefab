@@ -111,7 +111,7 @@ Transform:
   m_GameObject: {fileID: 1377197793697218}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 18, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.65, y: 1.65, z: 1.65}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4277827671834268}
@@ -175,10 +175,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "Sao Th\u1ED5"
   tag: Saturn
-  distaneWithSun: 475
-  width: 475
-  height: 475
-  speed: 2
+  distaneWithSun: 170
+  width: 170
+  height: 170
+  speed: 1.1049892
   longDescription: "Sao Th\u1ED5 (Saturn) t\u1EE9c Th\u1ED5 tinh l\xE0 h\xE0nh tinh
     th\u1EE9 s\xE1u t\xEDnh theo kho\u1EA3ng c\xE1ch trung b\xECnh t\u1EEB M\u1EB7t
     Tr\u1EDDi v\xE0 l\xE0 h\xE0nh tinh l\u1EDBn th\u1EE9 hai v\u1EC1 \u0111\u01B0\u1EDDng
@@ -186,7 +186,8 @@ MonoBehaviour:
     H\u1EC7 M\u1EB7t Tr\u1EDDi."
   element: "Ch\u1EE9a b\u1EE5i c\u0169ng nh\u01B0 c\xE1c h\u1EA1t b\u0103ng v\xE0
     \u0111\xE1 nh\u1ECF."
-  size: 0
+  size: 1.65
+  radius: 58.232 km
   rotary: 26.73
   speedrotation: 9.87
 --- !u!1 &1445422062220386

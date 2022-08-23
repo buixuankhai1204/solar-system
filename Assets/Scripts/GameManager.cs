@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -39,7 +40,7 @@ public class GameManager : MonoBehaviour
     public int countPlanetDrew;
     public string prevNameActive;
     public bool firtsCheckName;
-
+    public GameObject cube;
 
     void Start()
     {
@@ -52,9 +53,12 @@ public class GameManager : MonoBehaviour
         foreach (var planetInformation in list.PlanetsInformation)
         {
             listPlanetInformations.Add(planetInformation.tag, planetInformation);
-            GameObject.Find(planetInformation.tag).transform.rotation = 
-                Quaternion.Euler(0, 0, listPlanetInformations[planetInformation.tag].rotary);
+            GameObject.Find(planetInformation.tag).transform.eulerAngles =
+                new Vector3( 0, 0 ,-listPlanetInformations[planetInformation.tag].rotary);
+            GameObject.Find(planetInformation.tag).transform.localScale = new Vector3(planetInformation.size,
+                planetInformation.size, planetInformation.size);
         }
+
         listPlanetInformationsTmp = CloneDictionaryCloningValues(listPlanetInformations);
         ResetOne();
         ResetAll();
@@ -62,10 +66,12 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        cube.transform.Rotate(Vector3.down * 5, Space.Self);
         if (nameActive != "")
         {
             slider.value = listPlanetInformations[nameActive].speed;
         }
+
         if (Input.GetButton("Fire2") && Input.mouseScrollDelta != Vector2.zero)
         {
             ChangeSpeedCamera();
@@ -383,14 +389,18 @@ public class GameManager : MonoBehaviour
 
     public void ResetOne()
     {
-        if (nameActive == "")
-        {
-            return;
-        }
+        
 
         resetOne.onClick.AddListener(delegate
         {
+            if (nameActive == "")
+            {
+                return;
+            }
+            
             listPlanetInformations[nameActive] = CloneDictionaryCloningValue(listPlanetInformationsTmp[nameActive]);
+            upHeight.value = listPlanetInformations[nameActive].height;
+            upWidth.value = listPlanetInformations[nameActive].width;
             isDrawAgain = true;
         });
     }

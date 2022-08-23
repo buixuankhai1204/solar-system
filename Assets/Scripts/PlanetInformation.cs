@@ -12,6 +12,7 @@ public class PlanetInformation : MonoBehaviour, ICloneable
     public string longDescription;
     public string element;
     public float size;
+    public string radius;
     public float rotary;
     public float speedrotation;
 

@@ -10,6 +10,7 @@ TagManager:
   - UiManager
   - CircleShapeSlider
   - SubCanvas
+  - Earth
   layers:
   - Default
   - TransparentFX
