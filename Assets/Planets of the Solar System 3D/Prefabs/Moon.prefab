@@ -4998,18 +4998,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "M\u1EB7t tr\u0103ng"
   tag: Moon
-  distaneWithSun: 108
-  width: 2
-  height: 0
-  speed: 1
+  distaneWithSun: 10
+  width: 9.0671215
+  height: 9.781407
+  speed: 6
   longDescription: "M\u1EB7t Tr\u0103ng l\xE0 v\u1EC7 tinh t\u1EF1 nhi\xEAn duy nh\u1EA5t
     c\u1EE7a Tr\xE1i \u0110\u1EA5t. V\u1EC7 tinh n\xE0y \u0111\xE3 \u0111\u01B0\u1EE3c
     con ng\u01B0\u1EDDi bi\u1EBFt \u0111\u1EBFn t\u1EEB th\u1EDDi ti\u1EC1n s\u1EED
     do n\xF3 s\xE1ng th\u1EE9 nh\xEC v\xE0 ch\u1EC9 \u0111\u1EE9ng sau M\u1EB7t Tr\u1EDDi."
-  element: "Ch\u1EE9a nhi\u1EC1u kho\xE1ng silicat v\xE0 kh\xF4ng c\xF3 b\u1EA7u
-    kh\xED quy\u1EC3n, th\u1EE7y quy\u1EC3n, hay t\u1EEB quy\u1EC3n \u0111\xE1ng
-    k\u1EC3."
-  size: 0.5
+  element: "Ch\u1EE9a nhi\u1EC1u kho\xE1ng silicat."
+  size: 0.4
   radius: 1.737.1 Km
   rotary: 1.5
   speedrotation: 0

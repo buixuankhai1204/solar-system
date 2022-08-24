@@ -91,9 +91,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "Sao Thi\xEAn V\u01B0\u01A1ng"
   tag: Uranus
-  distaneWithSun: 250
-  width: 250
-  height: 250
+  distaneWithSun: 500
+  width: 500
+  height: 500
   speed: 0.55
   longDescription: "Sao Thi\xEAn V\u01B0\u01A1ng (Uranus) hay Thi\xEAn V\u01B0\u01A1ng
     tinh l\xE0 h\xE0nh tinh th\u1EE9 b\u1EA3y t\xEDnh t\u1EEB M\u1EB7t Tr\u1EDDi;

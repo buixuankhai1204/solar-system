@@ -5056,7 +5056,7 @@ MonoBehaviour:
   distaneWithSun: 40
   width: 40
   height: 40
-  speed: 3
+  speed: 4.5
   longDescription: "Sao Th\u1EE7y (Mercury) hay Th\u1EE7y tinh l\xE0 h\xE0nh tinh
     nh\u1ECF nh\u1EA5t v\xE0 g\u1EA7n M\u1EB7t Tr\u1EDDi nh\u1EA5t trong t\xE1m h\xE0nh
     tinh thu\u1ED9c H\u1EC7 M\u1EB7t Tr\u1EDDi, v\u1EDBi chu k\u1EF3 qu\u1EF9 \u0111\u1EA1o

@@ -5079,10 +5079,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "Sao H\u1EA3i V\u01B0\u01A1ng"
   tag: Neptune
-  distaneWithSun: 300
-  width: 300
-  height: 300
-  speed: 0.5
+  distaneWithSun: 600
+  width: 600
+  height: 600
+  speed: 0.4
   longDescription: "Sao H\u1EA3i V\u01B0\u01A1ng (Neptune) hay H\u1EA3i V\u01B0\u01A1ng
     tinh l\xE0 h\xE0nh tinh th\u1EE9 t\xE1m v\xE0 xa nh\u1EA5t t\xEDnh t\u1EEB M\u1EB7t
     Tr\u1EDDi trong H\u1EC7 M\u1EB7t Tr\u1EDDi. N\xF3 l\xE0 h\xE0nh tinh l\u1EDBn

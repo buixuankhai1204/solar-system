@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
+    private helper helper;
     public ShowInformation showInformation;
     public List list;
     public Dictionary<string, PlanetInformation> listPlanetInformations;
@@ -31,6 +33,9 @@ public class GameManager : MonoBehaviour
     public Slider upHeight;
     public Button resetAll;
     public Button resetOne;
+    public Button pause;
+    public TextMeshProUGUI pauseText;
+    public Slider timeScale;
     public string nameActive;
     public bool isDrawAgain;
     public bool moveY3D;
@@ -40,7 +45,14 @@ public class GameManager : MonoBehaviour
     public int countPlanetDrew;
     public string prevNameActive;
     public bool firtsCheckName;
-    public GameObject cube;
+    private float prevTimeScale;
+    public bool isDraw = false;
+
+    private void Awake()
+    {
+        Time.timeScale = 1/3f;
+        timeScale.value = Time.timeScale;
+    }
 
     void Start()
     {
@@ -54,7 +66,7 @@ public class GameManager : MonoBehaviour
         {
             listPlanetInformations.Add(planetInformation.tag, planetInformation);
             GameObject.Find(planetInformation.tag).transform.eulerAngles =
-                new Vector3( 0, 0 ,-listPlanetInformations[planetInformation.tag].rotary);
+                new Vector3(0, 0, -listPlanetInformations[planetInformation.tag].rotary);
             GameObject.Find(planetInformation.tag).transform.localScale = new Vector3(planetInformation.size,
                 planetInformation.size, planetInformation.size);
         }
@@ -62,11 +74,11 @@ public class GameManager : MonoBehaviour
         listPlanetInformationsTmp = CloneDictionaryCloningValues(listPlanetInformations);
         ResetOne();
         ResetAll();
+        Pause();
     }
 
     private void Update()
     {
-        cube.transform.Rotate(Vector3.down * 5, Space.Self);
         if (nameActive != "")
         {
             slider.value = listPlanetInformations[nameActive].speed;
@@ -97,6 +109,15 @@ public class GameManager : MonoBehaviour
         changeView.onValueChanged.AddListener((delegate { ChangeView3D(changeView.isOn); }));
     }
 
+    public float GetPrevTimeScale()
+    {
+        return prevTimeScale;
+    }
+    
+    public void SetPrevTimeScale(float value)
+    {
+        this.prevTimeScale = value;
+    }
     public void MoveCamera()
     {
         if (!changeValueView)
@@ -333,55 +354,57 @@ public class GameManager : MonoBehaviour
 
     public void UpWidth()
     {
-        if (nameActive == "")
-        {
-            return;
-        }
-
         upWidth.onValueChanged.AddListener(arg0 =>
         {
+            if (nameActive == "")
+            {
+                return;
+            }
+
             if (nameActive == prevNameActive)
             {
                 isDrawAgain = false;
             }
-            else
+
+            if (arg0 < listPlanetInformations[nameActive].distaneWithSun * 2)
             {
-                if (arg0 < listPlanetInformations[nameActive].distaneWithSun * 2)
-                {
-                    listPlanetInformations[nameActive].width = arg0;
-                }
+                listPlanetInformations[nameActive].width = arg0;
             }
         });
     }
 
     public void UpHeight()
     {
-        if (nameActive == "")
-        {
-            return;
-        }
-
         upHeight.onValueChanged.AddListener(arg0 =>
         {
+            if (nameActive == "")
+            {
+                return;
+            }
+
             if (nameActive == prevNameActive)
             {
                 isDrawAgain = false;
             }
-            else
+
+            if (arg0 < listPlanetInformations[nameActive].distaneWithSun * 2)
             {
-                if (arg0 < listPlanetInformations[nameActive].distaneWithSun * 2)
-                {
-                    listPlanetInformations[nameActive].height = arg0;
-                }
+                listPlanetInformations[nameActive].height = arg0;
+                
             }
         });
     }
 
     public void ResetAll()
     {
-        countPlanetDrew = 0;
         resetAll.onClick.AddListener(delegate
         {
+            if (nameActive == "")
+            {
+                return;
+            }
+
+            countPlanetDrew = 0;
             listPlanetInformations = CloneDictionaryCloningValues(listPlanetInformationsTmp);
             isDrawAgainAll = true;
         });
@@ -389,15 +412,13 @@ public class GameManager : MonoBehaviour
 
     public void ResetOne()
     {
-        
-
         resetOne.onClick.AddListener(delegate
         {
             if (nameActive == "")
             {
                 return;
             }
-            
+
             listPlanetInformations[nameActive] = CloneDictionaryCloningValue(listPlanetInformationsTmp[nameActive]);
             upHeight.value = listPlanetInformations[nameActive].height;
             upWidth.value = listPlanetInformations[nameActive].width;
@@ -405,7 +426,35 @@ public class GameManager : MonoBehaviour
         });
     }
 
-    public static Dictionary<TKey, TValue> CloneDictionaryCloningValues<TKey, TValue>
+    public void Pause()
+    {
+        pause.onClick.AddListener(delegate
+        {
+            if (Time.timeScale != 0)
+            {
+                prevTimeScale = Time.timeScale;
+                Time.timeScale = 0.0f;
+                pauseText.text = "Tiếp tục";
+
+            }
+            else
+            {
+                Time.timeScale = prevTimeScale;
+                pauseText.text = "Tạm Dừng";
+            }
+        });
+    }
+
+    public void TimeScale()
+    {
+        timeScale.onValueChanged.AddListener(arg0 =>
+        {
+            Time.timeScale = arg0;
+        });
+    }
+
+
+    public  Dictionary<TKey, TValue> CloneDictionaryCloningValues<TKey, TValue>
         (Dictionary<TKey, TValue> original) where TValue : ICloneable
     {
         Dictionary<TKey, TValue> ret = new Dictionary<TKey, TValue>(original.Count,
@@ -423,4 +472,5 @@ public class GameManager : MonoBehaviour
     {
         return (TValue)original.Clone();
     }
+   
 }

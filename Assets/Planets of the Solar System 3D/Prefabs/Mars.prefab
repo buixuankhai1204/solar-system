@@ -4913,9 +4913,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "Sao H\u1ECFa"
   tag: Mars
-  distaneWithSun: 130
-  width: 130
-  height: 130
+  distaneWithSun: 180
+  width: 180
+  height: 180
   speed: 1.1
   longDescription: "Sao H\u1ECFa hay H\u1ECFa tinh (ti\u1EBFng Anh: Mars) l\xE0 h\xE0nh
     tinh th\u1EE9 t\u01B0 t\xEDnh t\u1EEB M\u1EB7t Tr\u1EDDi v\xE0 l\xE0 h\xE0nh
