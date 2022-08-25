@@ -185,6 +185,7 @@ MonoBehaviour:
   radius: 6.051.8 Km
   rotary: 177.3
   speedrotation: 6.52
+  zPosition: 4
 --- !u!1 &1741346461429698
 GameObject:
   m_ObjectHideFlags: 0

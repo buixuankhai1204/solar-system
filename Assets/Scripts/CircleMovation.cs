@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,6 @@ public class CircleMovation : MonoBehaviour
     public Slider changeSpeedCamera;
     public LineRenderer orbit;
     public int currentIndex = 0;
-    public float indexMax = 2000;
     private bool startMove;
     private int count;
     private float prevWidth;
@@ -23,16 +23,18 @@ public class CircleMovation : MonoBehaviour
     private bool firstClick = true;
     public float zPosition;
     public float speedAll;
-    public List<Vector3> liststartPoints;
-    public List<Vector3> liststartPointsTmp;
+    private List<Vector3> liststartPoints;
+
     public bool firstAdd = true;
+    public int indexMax = 2000;
+    public bool firstDraw = true;
     private bool secondCheckWidth = true;
     private bool secondCheckHeight = true;
 
 
     private void Awake()
     {
-        liststartPoints = new List<Vector3>((int)indexMax);
+        liststartPoints = new List<Vector3>();
     }
 
     void Start()
@@ -59,31 +61,9 @@ public class CircleMovation : MonoBehaviour
             angle += speedAll * gameManager.listPlanetInformations[transform.name].speed * Time.timeScale;
             x = Mathf.Cos(angle) * gameManager.listPlanetInformations[transform.name].width * gameManager.scale;
             y = Mathf.Sin(angle) * gameManager.listPlanetInformations[transform.name].height * gameManager.scale;
-            if (transform.name == "Moon")
-            {
-                transform.position = GameObject.FindWithTag("Earth").transform.position;
-                transform.position += new Vector3(x * zPosition, y * zPosition);
-            }
-            else
-            {
-                transform.position = new Vector3(x, y, z);
-                if (liststartPoints.Count < indexMax )
-                {
-                    if (firstAdd)
-                    {
-                        gameManager.isDraw = true;
-                        liststartPoints.Add(transform.position);
-                    }
-                    Draw(transform.position);  
+            z = Mathf.Cos(angle) * gameManager.listPlanetInformations[transform.name].zPosition * gameManager.scale;
+            transform.Rotate(Vector3.down * gameManager.listPlanetInformations[name].speed *  Time.timeScale * 10f, Space.Self);
 
-                }
-            }
-
-            if (gameManager.checkShowInf && gameManager.nameActive == name)
-            {
-                showInformation.name.rectTransform.transform.position =
-                    Camera.main.WorldToScreenPoint(transform.position) + showInformation.positionNameActive;
-            }
             if (Time.timeScale != 0 && speedAll != 0)
             {
                 if (prevWidth != gameManager.listPlanetInformations[transform.name].width)
@@ -100,12 +80,10 @@ public class CircleMovation : MonoBehaviour
                         firstAdd = false;
                     }
                 }
-                
-                
                 else if (prevHeight != gameManager.listPlanetInformations[transform.name].height)
                 {
-                    orbit.positionCount = 0;
                     gameManager.isDraw = true;
+                    orbit.positionCount = 0;
                     prevHeight = gameManager.listPlanetInformations[transform.name].height;
                     if (secondCheckHeight)
                     {
@@ -116,19 +94,50 @@ public class CircleMovation : MonoBehaviour
                         firstAdd = false;
                     }
                 }
+            }
 
-                transform.Rotate(Vector3.down * gameManager.listPlanetInformations[name].speed * 5f, Space.Self);
+            if (gameManager.isDrawAgainAll && gameManager.countPlanetDrew < 10)
+            {
+                gameManager.countPlanetDrew++;
+                Invoke(nameof(DrawAgain), 0.05f);
+            }
+            else if (gameManager.isDrawAgain && gameManager.nameActive == name)
+            {
+                Invoke(nameof(DrawAgain), 0.05f);
+                gameManager.isDrawAgain = false;
+            }
 
-                if (gameManager.isDrawAgainAll && gameManager.countPlanetDrew < 10)
+            if (transform.name == "Moon")
+            {
+                transform.position = GameObject.FindWithTag("Earth").transform.position;
+                transform.position += new Vector3(x * zPosition, y * zPosition);
+            }
+            else
+            {
+                transform.position = new Vector3(x, y, z);
+                if (liststartPoints.Count < indexMax)
                 {
-                    gameManager.countPlanetDrew++;
-                    DrawAgain();
+                    if (firstAdd)
+                    {
+                        liststartPoints.Add(transform.position);
+                        if (liststartPoints.Contains(transform.position))
+                        {
+                            firstAdd = false;
+                        }
+                    }
+
                 }
-                else if (gameManager.isDrawAgain && gameManager.nameActive == name)
+                if (gameManager.isDraw)
                 {
-                    DrawAgain();
-                    gameManager.isDrawAgain = false;
+                    Draw(transform.position);
                 }
+                UpdateDraw();
+            }
+
+            if (gameManager.checkShowInf && gameManager.nameActive == name)
+            {
+                showInformation.name.rectTransform.transform.position =
+                    Camera.main.WorldToScreenPoint(transform.position) + showInformation.positionNameActive;
             }
         }
     }
@@ -210,7 +219,7 @@ public class CircleMovation : MonoBehaviour
 
     public void Draw(Vector3 drawPosition)
     {
-        if (orbit.positionCount < indexMax && gameManager.isDraw)
+        if (orbit.positionCount < liststartPoints.Count)
         {
             orbit.positionCount++;
             currentIndex = orbit.positionCount - 1;
@@ -228,5 +237,24 @@ public class CircleMovation : MonoBehaviour
             currentIndex = orbit.positionCount - 1;
             orbit.SetPosition(currentIndex, liststartPoints[i]);
         }
+    }
+
+    public void UpdateDraw()
+    {
+        if (liststartPoints.Count < indexMax &&
+            CheckDuplicate(transform.position, liststartPoints[liststartPoints.Count - 1]))
+        {
+            firstAdd = true;
+            orbit.positionCount++;
+            currentIndex = orbit.positionCount - 1;
+            liststartPoints.Add(transform.position);
+            orbit.SetPosition(currentIndex, transform.position);
+        }
+    }
+
+    public bool CheckDuplicate(Vector3 firstPosition, Vector3 LastPosition)
+    {
+        if ((firstPosition - LastPosition).magnitude < 0.5f) return true;
+        return false;
     }
 }

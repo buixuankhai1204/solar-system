@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Time.timeScale = 1/3f;
+        Time.timeScale = 1 / 3f;
         timeScale.value = Time.timeScale;
     }
 
@@ -74,11 +74,11 @@ public class GameManager : MonoBehaviour
         listPlanetInformationsTmp = CloneDictionaryCloningValues(listPlanetInformations);
         ResetOne();
         ResetAll();
-        Pause();
     }
 
     private void Update()
     {
+        Pause();
         if (nameActive != "")
         {
             slider.value = listPlanetInformations[nameActive].speed;
@@ -113,11 +113,12 @@ public class GameManager : MonoBehaviour
     {
         return prevTimeScale;
     }
-    
+
     public void SetPrevTimeScale(float value)
     {
         this.prevTimeScale = value;
     }
+
     public void MoveCamera()
     {
         if (!changeValueView)
@@ -387,10 +388,14 @@ public class GameManager : MonoBehaviour
                 isDrawAgain = false;
             }
 
+            if (Time.timeScale == 0)
+            {
+                return;
+            }
+
             if (arg0 < listPlanetInformations[nameActive].distaneWithSun * 2)
             {
                 listPlanetInformations[nameActive].height = arg0;
-                
             }
         });
     }
@@ -403,6 +408,12 @@ public class GameManager : MonoBehaviour
             {
                 return;
             }
+
+            if (Time.timeScale == 0)
+            {
+                return;
+            }
+
 
             countPlanetDrew = 0;
             listPlanetInformations = CloneDictionaryCloningValues(listPlanetInformationsTmp);
@@ -430,31 +441,29 @@ public class GameManager : MonoBehaviour
     {
         pause.onClick.AddListener(delegate
         {
-            if (Time.timeScale != 0)
+            if (Time.timeScale != 0.0f)
             {
+                Debug.Log("ádasd");
+                pauseText.text = "Tiếp tục";
                 prevTimeScale = Time.timeScale;
                 Time.timeScale = 0.0f;
-                pauseText.text = "Tiếp tục";
-
             }
             else
             {
-                Time.timeScale = prevTimeScale;
                 pauseText.text = "Tạm Dừng";
-            }
+                Time.timeScale = prevTimeScale;
+            } 
         });
+        
     }
 
     public void TimeScale()
     {
-        timeScale.onValueChanged.AddListener(arg0 =>
-        {
-            Time.timeScale = arg0;
-        });
+        timeScale.onValueChanged.AddListener(arg0 => { Time.timeScale = arg0; });
     }
 
 
-    public  Dictionary<TKey, TValue> CloneDictionaryCloningValues<TKey, TValue>
+    public Dictionary<TKey, TValue> CloneDictionaryCloningValues<TKey, TValue>
         (Dictionary<TKey, TValue> original) where TValue : ICloneable
     {
         Dictionary<TKey, TValue> ret = new Dictionary<TKey, TValue>(original.Count,
@@ -472,5 +481,4 @@ public class GameManager : MonoBehaviour
     {
         return (TValue)original.Clone();
     }
-   
 }

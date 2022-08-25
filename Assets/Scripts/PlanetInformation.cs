@@ -15,6 +15,7 @@ public class PlanetInformation : MonoBehaviour, ICloneable
     public string radius;
     public float rotary;
     public float speedrotation;
+    public float zPosition;
 
 
     public object Clone()
