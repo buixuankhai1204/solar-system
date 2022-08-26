@@ -47,9 +47,11 @@ public class GameManager : MonoBehaviour
     public bool firtsCheckName;
     private float prevTimeScale;
     public bool isDraw = false;
+    public float tmp;
 
     private void Awake()
     {
+        speedCamera = 0.15f;
         Time.timeScale = 1 / 3f;
         timeScale.value = Time.timeScale;
     }
@@ -57,6 +59,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         camera = Camera.main;
+
         showInformation = GameObject.FindWithTag("UiManager").GetComponent<ShowInformation>();
         camera.fieldOfView = 15f;
         listPlanetInformations = new Dictionary<string, PlanetInformation>();
@@ -66,7 +69,7 @@ public class GameManager : MonoBehaviour
         {
             listPlanetInformations.Add(planetInformation.tag, planetInformation);
             GameObject.Find(planetInformation.tag).transform.eulerAngles =
-                new Vector3(0, 0, -listPlanetInformations[planetInformation.tag].rotary);
+                new Vector3(90, 0, listPlanetInformations[planetInformation.tag].rotary);
             GameObject.Find(planetInformation.tag).transform.localScale = new Vector3(planetInformation.size,
                 planetInformation.size, planetInformation.size);
         }
@@ -74,11 +77,19 @@ public class GameManager : MonoBehaviour
         listPlanetInformationsTmp = CloneDictionaryCloningValues(listPlanetInformations);
         ResetOne();
         ResetAll();
-
     }
 
     private void Update()
     {
+        if (camera.transform.position.y < -400)
+        {
+            camera.nearClipPlane = -camera.transform.position.y - 200f;
+        }
+        else
+        {
+            camera.nearClipPlane = 200f;
+        }
+
         if (nameActive != "")
         {
             slider.value = listPlanetInformations[nameActive].speed;
@@ -105,8 +116,9 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        MoveCamera();
+        TimeScale();
         changeView.onValueChanged.AddListener((delegate { ChangeView3D(changeView.isOn); }));
+        MoveCamera();
     }
 
     public float GetPrevTimeScale()
@@ -203,7 +215,7 @@ public class GameManager : MonoBehaviour
                                   Mathf.Pow(mousePositionUp.y - mousePositionDown.y, 2)) * speedCamera;
             yDistance = (Mathf.Max(mousePositionUp.y, mousePositionDown.y) -
                          Mathf.Min(mousePositionUp.y, mousePositionDown.y)) * speedCamera;
-            if (distance <= 0)
+            if (distance <= 0f)
             {
                 return;
             }
@@ -235,9 +247,9 @@ public class GameManager : MonoBehaviour
                     x = -Mathf.Cos(angle) * distance;
                 }
 
-                camera.transform.position += new Vector3(x, y);
+                camera.transform.position += new Vector3(x, y) * speedCamera * 9.95f;
                 PrevMousePos = camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
-                    Input.mousePosition.y, 0));
+                    Input.mousePosition.y, camera.nearClipPlane));
                 x = 0;
                 y = 0;
             }
@@ -252,29 +264,29 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            camera.fieldOfView -= zoomCamera * Time.deltaTime * 10 * speedCamera;
+            camera.fieldOfView -= zoomCamera * Time.deltaTime * 50 * speedCamera;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            camera.fieldOfView += zoomCamera * Time.deltaTime * 10 * speedCamera;
+            camera.fieldOfView += zoomCamera * Time.deltaTime * 50 * speedCamera;
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-            x = -Mathf.Cos(Time.deltaTime) * 2 * speedCamera;
+            x = -Mathf.Cos(0.05f) * 10 * speedCamera;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            x = Mathf.Cos(Time.deltaTime) * 2 * speedCamera;
+            x = Mathf.Cos(0.05f) * 10 * speedCamera;
         }
 
         if (Input.GetKey(KeyCode.Q))
         {
-            y = -Mathf.Sin(Time.deltaTime) * 100 * speedCamera;
+            y = -Mathf.Sin(0.05f) * 200 * speedCamera;
         }
         else if (Input.GetKey(KeyCode.E))
         {
-            y = Mathf.Sin(Time.deltaTime) * 100 * speedCamera;
+            y = Mathf.Sin(0.05f) * 200 * speedCamera;
         }
 
         camera.transform.position += new Vector3(x, y);
@@ -343,7 +355,7 @@ public class GameManager : MonoBehaviour
                 moveY3D = false;
                 Quaternion newRotation;
                 newRotation = camera.transform.rotation * Quaternion.Euler(new Vector3(DegX,
-                    DegY, 0) * Time.deltaTime);
+                    DegY, 0) * 0.05f);
                 camera.transform.rotation = newRotation;
             }
             else
@@ -358,6 +370,11 @@ public class GameManager : MonoBehaviour
         upWidth.onValueChanged.AddListener(arg0 =>
         {
             if (nameActive == "")
+            {
+                return;
+            }
+
+            if (Time.timeScale == 0.0f)
             {
                 return;
             }
@@ -404,20 +421,18 @@ public class GameManager : MonoBehaviour
     {
         resetAll.onClick.AddListener(delegate
         {
-            if (nameActive == "")
-            {
-                return;
-            }
-
             if (Time.timeScale == 0)
             {
                 return;
             }
 
-
             countPlanetDrew = 0;
             listPlanetInformations = CloneDictionaryCloningValues(listPlanetInformationsTmp);
             isDrawAgainAll = true;
+            var camera = Camera.main;
+            camera.transform.position = new Vector3(0, 0, -300);
+            camera.fieldOfView = 22.3f;
+            camera.transform.rotation = new Quaternion(0, 0, 0, 0);
         });
     }
 
@@ -426,6 +441,11 @@ public class GameManager : MonoBehaviour
         resetOne.onClick.AddListener(delegate
         {
             if (nameActive == "")
+            {
+                return;
+            }
+
+            if (Time.timeScale == 0)
             {
                 return;
             }
@@ -439,25 +459,31 @@ public class GameManager : MonoBehaviour
 
     public void Pause()
     {
-        
-            if (Time.timeScale > 0.0f)
-            {
-                Debug.Log("ádasd");
-                pauseText.text = "Tiếp tục";
-                prevTimeScale = Time.timeScale;
-                Time.timeScale = 0.0f;
-            }
-            else
-            {
-                pauseText.text = "Tạm Dừng";
-                Time.timeScale = prevTimeScale;
-            } 
-        
+        if (Time.timeScale > 0.0f)
+        {
+            pauseText.text = "Tiếp tục";
+            prevTimeScale = Time.timeScale;
+            Time.timeScale = 0.0f;
+        }
+        else
+        {
+            timeScale.value = prevTimeScale;
+            pauseText.text = "Tạm Dừng";
+            Time.timeScale = prevTimeScale;
+        }
     }
 
     public void TimeScale()
     {
-        timeScale.onValueChanged.AddListener(arg0 => { Time.timeScale = arg0; });
+        timeScale.onValueChanged.AddListener(arg0 =>
+        {
+            if (Time.timeScale == 0f)
+            {
+                return;
+            }
+
+            Time.timeScale = arg0;
+        });
     }
 
 

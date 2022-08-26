@@ -5008,7 +5008,7 @@ MonoBehaviour:
   size: 2
   radius: 69.911 Km
   rotary: 3.13
-  speedrotation: 12.6
+  speedrotation: 45300
   zPosition: 1.305
 --- !u!1 &1739387421617238
 GameObject:
