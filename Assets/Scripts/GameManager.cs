@@ -74,11 +74,11 @@ public class GameManager : MonoBehaviour
         listPlanetInformationsTmp = CloneDictionaryCloningValues(listPlanetInformations);
         ResetOne();
         ResetAll();
+
     }
 
     private void Update()
     {
-        Pause();
         if (nameActive != "")
         {
             slider.value = listPlanetInformations[nameActive].speed;
@@ -439,9 +439,8 @@ public class GameManager : MonoBehaviour
 
     public void Pause()
     {
-        pause.onClick.AddListener(delegate
-        {
-            if (Time.timeScale != 0.0f)
+        
+            if (Time.timeScale > 0.0f)
             {
                 Debug.Log("ádasd");
                 pauseText.text = "Tiếp tục";
@@ -453,7 +452,6 @@ public class GameManager : MonoBehaviour
                 pauseText.text = "Tạm Dừng";
                 Time.timeScale = prevTimeScale;
             } 
-        });
         
     }
 
