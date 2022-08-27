@@ -5012,6 +5012,7 @@ MonoBehaviour:
   rotary: 1.5
   speedrotation: 0
   zPosition: 0
+  directionOfRotation: -1
 --- !u!1 &1461827109007070
 GameObject:
   m_ObjectHideFlags: 0

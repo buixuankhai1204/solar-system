@@ -1,9 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
+using UnityEngine.XR;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class GameManager : MonoBehaviour
     public float scale = 1;
     private Vector2 mousePositionUp;
     private Vector2 mousePositionDown;
-    private Vector3 PrevMousePos;
+    private Vector3 prevMousePos;
     private Camera camera;
     private float distance;
     private float angle;
@@ -23,11 +24,11 @@ public class GameManager : MonoBehaviour
     public bool firstCheck;
     public float speedCamera = 0.003f;
     public float zoomCamera = 1f;
-    public bool checkShowInf = false;
+    public bool checkShowInf;
     private float x, y, z;
     public bool changeValueView = true;
     public Toggle changeView;
-    float DegY, DegX;
+    float degY, degX;
     public Slider slider;
     public Slider upWidth;
     public Slider upHeight;
@@ -46,8 +47,8 @@ public class GameManager : MonoBehaviour
     public string prevNameActive;
     public bool firtsCheckName;
     private float prevTimeScale;
-    public bool isDraw = false;
-    public float tmp;
+    public bool isDraw;
+    public bool checkClickUi;
 
     private void Awake()
     {
@@ -119,6 +120,7 @@ public class GameManager : MonoBehaviour
         TimeScale();
         changeView.onValueChanged.AddListener((delegate { ChangeView3D(changeView.isOn); }));
         MoveCamera();
+        DeActiveGameObject();
     }
 
     public float GetPrevTimeScale()
@@ -226,7 +228,7 @@ public class GameManager : MonoBehaviour
                 angle = Mathf.Asin(yDistance / distance);
             }
 
-            if (PrevMousePos != camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+            if (prevMousePos != camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
                     Input.mousePosition.y, camera.nearClipPlane)))
             {
                 if (mousePositionUp.y > mousePositionDown.y)
@@ -248,7 +250,7 @@ public class GameManager : MonoBehaviour
                 }
 
                 camera.transform.position += new Vector3(x, y) * speedCamera * 9.95f;
-                PrevMousePos = camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                prevMousePos = camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
                     Input.mousePosition.y, camera.nearClipPlane));
                 x = 0;
                 y = 0;
@@ -325,7 +327,7 @@ public class GameManager : MonoBehaviour
             {
                 angle = Mathf.Asin(yDistance / distance);
                 moveY3D = true;
-                DegY = 0;
+                degY = 0;
             }
 
             if (
@@ -334,28 +336,28 @@ public class GameManager : MonoBehaviour
             {
                 if (mousePositionUp.y > mousePositionDown.y)
                 {
-                    DegX = Mathf.Sin(angle) * speedCamera * Mathf.Rad2Deg;
+                    degX = Mathf.Sin(angle) * speedCamera * Mathf.Rad2Deg;
                 }
                 else
                 {
-                    DegX = -Mathf.Sin(angle) * speedCamera * Mathf.Rad2Deg;
+                    degX = -Mathf.Sin(angle) * speedCamera * Mathf.Rad2Deg;
                 }
 
                 if (mousePositionUp.x > mousePositionDown.x)
                 {
                     if (moveY3D == false)
-                        DegY = -Mathf.Cos(angle) * speedCamera * Mathf.Rad2Deg;
+                        degY = -Mathf.Cos(angle) * speedCamera * Mathf.Rad2Deg;
                 }
                 else
                 {
                     if (moveY3D == false)
-                        DegY = Mathf.Cos(angle) * speedCamera * Mathf.Rad2Deg;
+                        degY = Mathf.Cos(angle) * speedCamera * Mathf.Rad2Deg;
                 }
 
                 moveY3D = false;
                 Quaternion newRotation;
-                newRotation = camera.transform.rotation * Quaternion.Euler(new Vector3(DegX,
-                    DegY, 0) * 0.05f);
+                newRotation = camera.transform.rotation * Quaternion.Euler(new Vector3(degX,
+                    degY, 0) * 0.05f);
                 camera.transform.rotation = newRotation;
             }
             else
@@ -429,7 +431,6 @@ public class GameManager : MonoBehaviour
             countPlanetDrew = 0;
             listPlanetInformations = CloneDictionaryCloningValues(listPlanetInformationsTmp);
             isDrawAgainAll = true;
-            var camera = Camera.main;
             camera.transform.position = new Vector3(0, 0, -300);
             camera.fieldOfView = 22.3f;
             camera.transform.rotation = new Quaternion(0, 0, 0, 0);
@@ -486,6 +487,25 @@ public class GameManager : MonoBehaviour
         });
     }
 
+    public void DeActiveGameObject()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+                RaycastHit raycastHit;
+                Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+                if (!Physics.Raycast(ray, out raycastHit, 1000f))
+                {
+                    if ( checkClickUi == false)
+                    {
+                        nameActive = "";
+                    }
+                }
+                else
+                {
+                    Debug.Log("asdasd");
+                }
+        }
+    }
 
     public Dictionary<TKey, TValue> CloneDictionaryCloningValues<TKey, TValue>
         (Dictionary<TKey, TValue> original) where TValue : ICloneable
@@ -504,5 +524,10 @@ public class GameManager : MonoBehaviour
         (TValue original) where TValue : ICloneable
     {
         return (TValue)original.Clone();
+    }
+
+    public IEnumerator waitting()
+    {
+        yield return new WaitForSeconds(0.1f);
     }
 }

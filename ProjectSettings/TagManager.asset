@@ -11,6 +11,7 @@ TagManager:
   - CircleShapeSlider
   - SubCanvas
   - Earth
+  - UiPanel
   layers:
   - Default
   - TransparentFX

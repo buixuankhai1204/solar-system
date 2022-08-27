@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +13,7 @@ public class CircleMovation : MonoBehaviour
     private ShowInformation showInformation;
     public Slider changeSpeedCamera;
     public LineRenderer orbit;
-    public int currentIndex = 0;
+    public int currentIndex;
     private bool startMove;
     private int count;
     private float prevWidth;
@@ -63,7 +61,6 @@ public class CircleMovation : MonoBehaviour
                 liststartPoints.Add(new Vector3(x, y, z));
             }
         }
-
         startMove = true;
     }
 
@@ -80,7 +77,7 @@ public class CircleMovation : MonoBehaviour
             z = Mathf.Cos(angle) * gameManager.listPlanetInformations[transform.name].zPosition * gameManager.scale;
             transform.Rotate(
                 Vector3.down * gameManager.listPlanetInformations[transform.name].speedrotation * Time.timeScale *
-                0.05f,
+                0.05f * gameManager.listPlanetInformations[transform.name].directionOfRotation,
                 Space.Self);
 
 
@@ -242,6 +239,10 @@ public class CircleMovation : MonoBehaviour
 
     public void SliderController()
     {
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
         gameManager.slider.onValueChanged.AddListener((arg0 => ScrollbarCallback(arg0)));
     }
 

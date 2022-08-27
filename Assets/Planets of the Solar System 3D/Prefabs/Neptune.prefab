@@ -5094,3 +5094,4 @@ MonoBehaviour:
   rotary: 28.32
   speedrotation: 9660
   zPosition: 1.76
+  directionOfRotation: -1

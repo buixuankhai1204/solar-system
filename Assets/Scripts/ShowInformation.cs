@@ -16,11 +16,33 @@ public class ShowInformation : MonoBehaviour
     public Vector3 positionNameActive;
     public TextMeshProUGUI changeSpeedCamera;
     public GameObject planet;
+    public GameObject Information;
 
     private void Start()
     {
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         positionNameActive = new Vector3(70, 10, 0);
+    }
+
+
+    private void Update()
+    {
+        if (gameManager.nameActive == "")
+        {
+            gameManager.slider.transform.gameObject.SetActive(false);
+            gameManager.upHeight.transform.gameObject.SetActive(false);
+            gameManager.upWidth.transform.gameObject.SetActive(false);
+            gameManager.resetOne.transform.gameObject.SetActive(false);
+            Information.SetActive(false);
+        }
+        else
+        {
+            gameManager.slider.transform.gameObject.SetActive(true);
+            gameManager.upHeight.transform.gameObject.SetActive(true);
+            gameManager.upWidth.transform.gameObject.SetActive(true);
+            gameManager.resetOne.transform.gameObject.SetActive(true);
+            Information.SetActive(true);
+        }
     }
 
     public void ShowInformationPlanet(string name, GameObject gameObject)
@@ -37,7 +59,7 @@ public class ShowInformation : MonoBehaviour
                 this.size.text = planet.Value.size.ToString();
                 this.element.text = planet.Value.element;
                 this.longDescription.text = planet.Value.longDescription;
-                this.rotary.text = planet.Value.rotary.ToString() + " độ";
+                this.rotary.text = planet.Value.rotary + " độ";
                 this.Radius.text = planet.Value.radius;
             }
         }
