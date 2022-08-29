@@ -175,7 +175,7 @@ MonoBehaviour:
   distaneWithSun: 70
   width: 70
   height: 70
-  speed: 3
+  speed: 7.377231
   longDescription: "Sao Kim (Kim tinh, c\xF2n g\u1ECDi l\xE0 sao Th\xE1i B\u1EA1ch,
     Th\xE1i B\u1EA1ch Kim tinh, ti\u1EBFng Anh: Venus) l\xE0 h\xE0nh tinh th\u1EE9
     2 trong h\u1EC7 M\u1EB7t Tr\u1EDDi, t\u1EF1 quay quanh n\xF3 v\u1EDBi chu k\u1EF3
@@ -187,6 +187,7 @@ MonoBehaviour:
   speedrotation: 6.52
   zPosition: 4
   directionOfRotation: 1
+  xRotation: 90
 --- !u!1 &1741346461429698
 GameObject:
   m_ObjectHideFlags: 0

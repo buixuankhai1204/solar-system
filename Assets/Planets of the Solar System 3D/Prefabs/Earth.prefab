@@ -4999,7 +4999,7 @@ MonoBehaviour:
   distaneWithSun: 120
   width: 120
   height: 120
-  speed: 2.5
+  speed: 3.7220585
   longDescription: "Tr\xE1i \u0110\u1EA5t hay \u0110\u1ECBa C\u1EA7u (ti\u1EBFng
     Anh: Earth), l\xE0 h\xE0nh tinh th\u1EE9 ba t\xEDnh t\u1EEB M\u1EB7t Tr\u1EDDi,
     \u0111\u1ED3ng th\u1EDDi c\u0169ng l\xE0 h\xE0nh tinh l\u1EDBn nh\u1EA5t trong
@@ -5013,6 +5013,7 @@ MonoBehaviour:
   speedrotation: 1674.38
   zPosition: 0.1
   directionOfRotation: -1
+  xRotation: 90
 --- !u!1 &1982611864615202
 GameObject:
   m_ObjectHideFlags: 0

@@ -5011,6 +5011,7 @@ MonoBehaviour:
   speedrotation: 45300
   zPosition: 1.305
   directionOfRotation: -1
+  xRotation: 90
 --- !u!1 &1739387421617238
 GameObject:
   m_ObjectHideFlags: 0

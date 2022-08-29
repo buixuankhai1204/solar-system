@@ -5,50 +5,46 @@ using UnityEngine.EventSystems; // 1
 public class DetectUI : MonoBehaviour
         , IPointerClickHandler // 2
         , IDragHandler
+        , IEndDragHandler
         , IPointerEnterHandler
         , IPointerExitHandler
     // ... And many more available!
 {
-    SpriteRenderer sprite;
-    Color target = Color.red;
     public GameManager gameManager;
  
-    void Awake()
-    {
-        sprite = GetComponent<SpriteRenderer>();
-    }
+
  
     void Update()
     {
-        if (sprite)
-            sprite.color = Vector4.MoveTowards(sprite.color, target, Time.deltaTime * 10);
         
     }
  
     public void OnPointerClick(PointerEventData eventData) // 3
     {
         print("I was clicked");
-        target = Color.blue;
-        gameManager.checkClickUi = false;
+        gameManager.checkClickUi = true;
+        gameManager.isDrawAgain = true;
     }
  
     public void OnDrag(PointerEventData eventData)
     {
         print("I'm being dragged!");
-        target = Color.magenta;
+        gameManager.checkClickUi = true;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        // gameManager.isDrawAgain = true;
     }
  
     public void OnPointerEnter(PointerEventData eventData)
     {
-        target = Color.green;
         gameManager.checkClickUi = true;
     }
  
     public void OnPointerExit(PointerEventData eventData)
     {
-        target = Color.red;
         gameManager.checkClickUi = false;
-
     }
 
 }

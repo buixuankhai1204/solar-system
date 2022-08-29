@@ -6,30 +6,32 @@ using UnityEngine.UI;
 public class CircleMovation : MonoBehaviour
 {
     private helper helper;
-    public float x, y, z;
+    private float x, y, z;
     public float angle;
     private PlanetInformation planetInformation;
     private GameManager gameManager;
     private ShowInformation showInformation;
     public Slider changeSpeedCamera;
     public LineRenderer orbit;
-    public int currentIndex;
+    private int currentIndex;
     private bool startMove;
     private int count;
     private float prevWidth;
     private float prevHeight;
     private bool firstClick = true;
     public float zPosition;
-    public float speedAll;
+    private float speedAll;
     private List<Vector3> liststartPoints;
 
     public bool firstAdd = true;
     public int indexMax = 2000;
     public bool firstDraw = true;
     public bool firstDrawHeight = true;
+    private bool firstAddPoint = true;
+    private Vector3 firstPoint;
     private bool secondCheckWidth = true;
     private bool secondCheckHeight = true;
-
+    private int countPos = 0;
 
     private void Awake()
     {
@@ -61,6 +63,7 @@ public class CircleMovation : MonoBehaviour
                 liststartPoints.Add(new Vector3(x, y, z));
             }
         }
+
         startMove = true;
     }
 
@@ -70,163 +73,19 @@ public class CircleMovation : MonoBehaviour
         {
             SliderController();
             ChangeSpeedCameraSlier();
-
-            angle += speedAll * gameManager.listPlanetInformations[transform.name].speed * Time.timeScale;
-            x = Mathf.Cos(angle) * gameManager.listPlanetInformations[transform.name].width * gameManager.scale;
-            y = Mathf.Sin(angle) * gameManager.listPlanetInformations[transform.name].height * gameManager.scale;
-            z = Mathf.Cos(angle) * gameManager.listPlanetInformations[transform.name].zPosition * gameManager.scale;
-            transform.Rotate(
-                Vector3.down * gameManager.listPlanetInformations[transform.name].speedrotation * Time.timeScale *
-                0.05f * gameManager.listPlanetInformations[transform.name].directionOfRotation,
-                Space.Self);
-
-
-            if (Time.timeScale != 0 && speedAll != 0)
-            {
-                if (firstDraw)
-                {
-                    prevWidth = gameManager.listPlanetInformations[transform.name].width;
-                    firstDraw = false;
-                }
-
-                if (firstDrawHeight)
-                {
-                    prevHeight = gameManager.listPlanetInformations[transform.name].height;
-                    firstDrawHeight = false;
-                }
-
-                if (prevWidth != gameManager.listPlanetInformations[transform.name].width)
-                {
-                    gameManager.isDraw = true;
-                    orbit.positionCount = 0;
-                    prevWidth = gameManager.listPlanetInformations[transform.name].width;
-                    if (secondCheckWidth)
-                    {
-                        secondCheckWidth = false;
-                    }
-                    else
-                    {
-                        firstAdd = false;
-                    }
-                }
-                else if (prevHeight != gameManager.listPlanetInformations[transform.name].height)
-                {
-                    gameManager.isDraw = true;
-                    orbit.positionCount = 0;
-                    prevHeight = gameManager.listPlanetInformations[transform.name].height;
-                    if (secondCheckHeight)
-                    {
-                        secondCheckHeight = false;
-                    }
-                    else
-                    {
-                        firstAdd = false;
-                    }
-                }
-                // if (prevWidth != gameManager.listPlanetInformations[transform.name].width)
-                // {
-                //     gameManager.isDraw = true;
-                //     orbit.positionCount = 0;
-                //     prevWidth = gameManager.listPlanetInformations[transform.name].width;
-                //     if (secondCheckWidth)
-                //     {
-                //         secondCheckWidth = false;
-                //     }
-                //     else
-                //     {
-                //         firstAdd = false;
-                //     }
-                // }
-                // else if (prevHeight != gameManager.listPlanetInformations[transform.name].height)
-                // {
-                //     gameManager.isDraw = true;
-                //     orbit.positionCount = 0;
-                //     prevHeight = gameManager.listPlanetInformations[transform.name].height;
-                //     if (secondCheckHeight)
-                //     {
-                //         secondCheckHeight = false;
-                //     }
-                //     else
-                //     {
-                //         firstAdd = false;
-                //     }
-                // }
-            }
-
-            if (gameManager.isDrawAgainAll && gameManager.countPlanetDrew < 10)
-            {
-                gameManager.countPlanetDrew++;
-                Invoke(nameof(DrawAgain), 0.05f);
-            }
-            else if (gameManager.isDrawAgain && gameManager.nameActive == name)
-            {
-                Invoke(nameof(DrawAgain), 0.05f);
-                gameManager.isDrawAgain = false;
-            }
-
-            if (transform.name == "Moon")
-            {
-                transform.position = GameObject.FindWithTag("Earth").transform.position;
-                transform.position += new Vector3(x * zPosition, y * zPosition);
-            }
-            else
-            {
-                transform.position = new Vector3(x, y, z);
-            }
-
-            // else
-            // {
-            //     transform.position = new Vector3(x, y, z);
-            //     if (liststartPoints.Count < indexMax)
-            //     {
-            //         if (firstAdd)
-            //         {
-            //             liststartPoints.Add(transform.position);
-            //             if (liststartPoints.Contains(transform.position))
-            //             {
-            //                 firstAdd = false;
-            //             }
-            //         }
-            //     }
-            //
-            //     if (gameManager.isDraw)
-            //     {
-            //         Draw(transform.position);
-            //     }
-            //
-            //     UpdateDraw();
-            // }
-            Draw(transform.position);
-
-
-            if (gameManager.checkShowInf && gameManager.nameActive == name)
-            {
-                showInformation.name.rectTransform.transform.position = new Vector3(Camera.main.WorldToScreenPoint(
-                    transform.position).x,
-                    Camera.main.WorldToScreenPoint(transform.position).y, 0) +showInformation.positionNameActive;
-            }
+            RotatePlanet();
+            CheckDrawAgain();
+            SetPositionPlanet();
+            ChangeBoxCollider();
+            
+            showInformation.ShowNameActive(transform);
         }
 
-        GetComponent<SphereCollider>().radius = Camera.main.fieldOfView / 10;
-        if (GetComponent<SphereCollider>().radius < 1)
-        {
-            GetComponent<SphereCollider>().radius = 1;
-        }
-
-        if (transform.name == "Sun Sphere")
-        {
-            GetComponent<SphereCollider>().radius = 1;
-        }
     }
 
     private void OnMouseDown()
     {
-        if (firstClick)
-        {
-            firstClick = false;
-            gameManager.isDrawAgain = false;
-        }
-
+       
         gameManager.checkShowInf = true;
         showInformation.ShowInformationPlanet(transform.gameObject.name, this.gameObject);
         if (Input.GetButtonDown("Fire1"))
@@ -243,22 +102,17 @@ public class CircleMovation : MonoBehaviour
         {
             return;
         }
-        gameManager.slider.onValueChanged.AddListener((arg0 => ScrollbarCallback(arg0)));
-    }
-
-    public void ScrollbarCallback(float value)
-    {
-        if (Time.timeScale == 0)
-        {
-            return;
-        }
 
         if (gameManager.nameActive == "")
         {
             return;
         }
 
-        gameManager.listPlanetInformations[gameManager.nameActive].speed = value;
+        gameManager.slider.onValueChanged.AddListener(arg0 =>
+        {
+            gameManager.listPlanetInformations[gameManager.nameActive].speed = arg0;
+            
+        });
     }
 
     public void ChangeSpeedCameraSlier()
@@ -305,54 +159,86 @@ public class CircleMovation : MonoBehaviour
         }
     }
 
-    public void Draw(Vector3 drawPosition)
-    {
-        if (orbit.positionCount < liststartPoints.Count)
-        {
-            orbit.positionCount++;
-            currentIndex = orbit.positionCount - 1;
-            orbit.SetPosition(currentIndex, drawPosition);
-        }
-    }
-
-    public void NewDraw(Vector3 drawPosition)
-    {
-        if (gameManager.isDraw)
-        {
-            orbit.positionCount++;
-            currentIndex = orbit.positionCount - 1;
-            orbit.SetPosition(currentIndex, drawPosition);
-        }
-    }
-
-    public void DrawAgain()
+    public void RunDefault(float width, float height)
     {
         orbit.positionCount = 0;
         currentIndex = 0;
-        for (int i = 0; i < liststartPoints.Count; i++)
+        for (int i = 0; i < indexMax; i++)
         {
+            angle += speedAll * gameManager.listPlanetInformations[transform.name].speed * Time.timeScale;
+            x = Mathf.Cos(angle) * width * gameManager.scale;
+            y = Mathf.Sin(angle) * height * gameManager.scale;
+            z = Mathf.Cos(angle) * gameManager.listPlanetInformations[transform.name].zPosition * gameManager.scale;
             orbit.positionCount++;
             currentIndex = orbit.positionCount - 1;
-            orbit.SetPosition(currentIndex, liststartPoints[i]);
+            orbit.SetPosition(currentIndex, new Vector3(x, y, z));
+        }
+        angle = 0;
+        
+    }
+
+    public void ChangeBoxCollider()
+    {
+        
+        GetComponent<SphereCollider>().radius = Camera.main.fieldOfView / 10;
+        if (GetComponent<SphereCollider>().radius < 1)
+        {
+            GetComponent<SphereCollider>().radius = 1;
+        }
+
+        if (transform.name == "Sun Sphere")
+        {
+            GetComponent<SphereCollider>().radius = 1;
+        }
+
+        if (transform.name == "Moon")
+        {
+            GetComponent<SphereCollider>().radius = Camera.main.fieldOfView / 5;
         }
     }
 
-    public void UpdateDraw()
+    private void CheckDrawAgain()
     {
-        if (liststartPoints.Count < indexMax &&
-            CheckDuplicate(transform.position, liststartPoints[liststartPoints.Count - 1]))
+        if (gameManager.isDrawAgainAll && gameManager.countPlanetDrew < 10)
         {
-            firstAdd = true;
-            orbit.positionCount++;
-            currentIndex = orbit.positionCount - 1;
-            liststartPoints.Add(transform.position);
-            orbit.SetPosition(currentIndex, transform.position);
+            gameManager.countPlanetDrew++;
+            // Invoke(nameof(DrawAgain), 0.05f);
+            RunDefault(gameManager.listPlanetInformations[transform.name].width,
+                gameManager.listPlanetInformations[transform.name].height);
+        }
+        else if (gameManager.isDrawAgain && gameManager.nameActive == name)
+        {
+            RunDefault(gameManager.listPlanetInformations[transform.name].width,
+                gameManager.listPlanetInformations[transform.name].height);
+            gameManager.isDrawAgain = false;
         }
     }
 
-    public bool CheckDuplicate(Vector3 firstPosition, Vector3 LastPosition)
+    private void SetPositionPlanet()
     {
-        if ((firstPosition - LastPosition).magnitude < 0.5f) return true;
-        return false;
+        
+        if (transform.name == "Moon")
+        {
+            transform.position = GameObject.FindWithTag("Earth").transform.position;
+            transform.position += new Vector3(x * zPosition, y * zPosition);
+        }
+        else
+        {
+            transform.position = orbit.GetPosition(countPos);
+            countPos++;
+            if (countPos == orbit.positionCount)
+            {
+                countPos = 0;
+            }
+        }
     }
+
+    public void RotatePlanet()
+    {
+        transform.Rotate(
+            Vector3.down * gameManager.listPlanetInformations[transform.name].speedrotation * Time.timeScale *
+            0.05f * gameManager.listPlanetInformations[transform.name].directionOfRotation,
+            Space.Self);
+    }
+    
 }

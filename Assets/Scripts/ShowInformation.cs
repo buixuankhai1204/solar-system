@@ -24,7 +24,15 @@ public class ShowInformation : MonoBehaviour
         positionNameActive = new Vector3(70, 10, 0);
     }
 
-
+    public void ShowNameActive(Transform transform)
+    {
+        if (gameManager.checkShowInf && gameManager.nameActive == transform.name)
+        {
+            name.rectTransform.transform.position = new Vector3(Camera.main.WorldToScreenPoint(
+                    transform.position).x,
+                Camera.main.WorldToScreenPoint(transform.position).y, 0) + positionNameActive;
+        }
+    }
     private void Update()
     {
         if (gameManager.nameActive == "")

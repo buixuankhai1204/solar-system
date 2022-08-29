@@ -47,12 +47,11 @@ public class GameManager : MonoBehaviour
     public string prevNameActive;
     public bool firtsCheckName;
     private float prevTimeScale;
-    public bool isDraw;
     public bool checkClickUi;
 
     private void Awake()
     {
-        speedCamera = 0.15f;
+        speedCamera = 0.3f;
         Time.timeScale = 1 / 3f;
         timeScale.value = Time.timeScale;
     }
@@ -70,7 +69,8 @@ public class GameManager : MonoBehaviour
         {
             listPlanetInformations.Add(planetInformation.tag, planetInformation);
             GameObject.Find(planetInformation.tag).transform.eulerAngles =
-                new Vector3(90, 0, listPlanetInformations[planetInformation.tag].rotary);
+                new Vector3(listPlanetInformations[planetInformation.tag].xRotation, 0,
+                    listPlanetInformations[planetInformation.tag].rotary);
             GameObject.Find(planetInformation.tag).transform.localScale = new Vector3(planetInformation.size,
                 planetInformation.size, planetInformation.size);
         }
@@ -82,15 +82,14 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (camera.transform.position.y < -400)
+        if (camera.transform.position.y <= -300)
         {
-            camera.nearClipPlane = -camera.transform.position.y - 200f;
+            camera.nearClipPlane = -camera.transform.position.y - 100f;
         }
         else
         {
             camera.nearClipPlane = 200f;
         }
-
         if (nameActive != "")
         {
             slider.value = listPlanetInformations[nameActive].speed;
@@ -121,16 +120,6 @@ public class GameManager : MonoBehaviour
         changeView.onValueChanged.AddListener((delegate { ChangeView3D(changeView.isOn); }));
         MoveCamera();
         DeActiveGameObject();
-    }
-
-    public float GetPrevTimeScale()
-    {
-        return prevTimeScale;
-    }
-
-    public void SetPrevTimeScale(float value)
-    {
-        this.prevTimeScale = value;
     }
 
     public void MoveCamera()
@@ -266,11 +255,11 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            camera.fieldOfView -= zoomCamera * Time.deltaTime * 50 * speedCamera;
+            camera.fieldOfView -= zoomCamera * Time.deltaTime * 100 * speedCamera;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            camera.fieldOfView += zoomCamera * Time.deltaTime * 50 * speedCamera;
+            camera.fieldOfView += zoomCamera * Time.deltaTime * 100 * speedCamera;
         }
 
         if (Input.GetKey(KeyCode.A))
@@ -381,10 +370,6 @@ public class GameManager : MonoBehaviour
                 return;
             }
 
-            if (nameActive == prevNameActive)
-            {
-                isDrawAgain = false;
-            }
 
             if (arg0 < listPlanetInformations[nameActive].distaneWithSun * 2)
             {
@@ -400,11 +385,6 @@ public class GameManager : MonoBehaviour
             if (nameActive == "")
             {
                 return;
-            }
-
-            if (nameActive == prevNameActive)
-            {
-                isDrawAgain = false;
             }
 
             if (Time.timeScale == 0)
@@ -491,19 +471,16 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-                RaycastHit raycastHit;
-                Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-                if (!Physics.Raycast(ray, out raycastHit, 1000f))
+            RaycastHit raycastHit;
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+            if (!Physics.Raycast(ray, out raycastHit, 1000f))
+            {
+                if (checkClickUi == false)
                 {
-                    if ( checkClickUi == false)
-                    {
-                        nameActive = "";
-                    }
+                    nameActive = "";
                 }
-                else
-                {
-                    Debug.Log("asdasd");
-                }
+            }
+            
         }
     }
 
