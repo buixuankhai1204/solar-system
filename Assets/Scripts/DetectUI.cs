@@ -29,13 +29,14 @@ public class DetectUI : MonoBehaviour
     {
         print("I was clicked");
         target = Color.blue;
-        gameManager.checkClickUi = false;
+        gameManager.checkClickUi = true;
     }
  
     public void OnDrag(PointerEventData eventData)
     {
         print("I'm being dragged!");
         target = Color.magenta;
+        gameManager.checkClickUi = true;
     }
  
     public void OnPointerEnter(PointerEventData eventData)

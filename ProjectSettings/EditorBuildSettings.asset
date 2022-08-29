@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Planets of the Solar System 3D/Scenes/Overview.unity
+    path: Assets/Scenes/Planets of the Solar System 3D/Scenes/Overview.unity
     guid: 814be974cad794e15b4b92041614ba68
   m_configObjects: {}

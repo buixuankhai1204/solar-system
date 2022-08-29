@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        speedCamera = 0.15f;
+        speedCamera = 0.3f;
         Time.timeScale = 1 / 3f;
         timeScale.value = Time.timeScale;
     }
@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
         {
             listPlanetInformations.Add(planetInformation.tag, planetInformation);
             GameObject.Find(planetInformation.tag).transform.eulerAngles =
-                new Vector3(90, 0, listPlanetInformations[planetInformation.tag].rotary);
+                new Vector3(listPlanetInformations[planetInformation.tag].rotationX, 0, listPlanetInformations[planetInformation.tag].rotary);
             GameObject.Find(planetInformation.tag).transform.localScale = new Vector3(planetInformation.size,
                 planetInformation.size, planetInformation.size);
         }

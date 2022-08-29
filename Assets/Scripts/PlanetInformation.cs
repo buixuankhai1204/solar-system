@@ -17,6 +17,7 @@ public class PlanetInformation : MonoBehaviour, ICloneable
     public float speedrotation;
     public float zPosition;
     public int directionOfRotation;
+    public int rotationX;
 
 
 
