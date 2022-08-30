@@ -24,17 +24,18 @@ public class DetectUI : MonoBehaviour
         print("I was clicked");
         gameManager.checkClickUi = true;
         gameManager.isDrawAgain = true;
+
     }
  
     public void OnDrag(PointerEventData eventData)
     {
-        print("I'm being dragged!");
         gameManager.checkClickUi = true;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         // gameManager.isDrawAgain = true;
+
     }
  
     public void OnPointerEnter(PointerEventData eventData)

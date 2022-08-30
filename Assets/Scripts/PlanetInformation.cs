@@ -21,6 +21,7 @@ public class PlanetInformation : MonoBehaviour, ICloneable
 
 
 
+
     public object Clone()
     {
         PlanetInformation planetInformation = (PlanetInformation) this.MemberwiseClone();
