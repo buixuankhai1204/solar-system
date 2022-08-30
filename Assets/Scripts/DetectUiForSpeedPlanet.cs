@@ -1,26 +1,34 @@
 using System.Collections;
-using UnityEngine.EventSystems; // 1
+using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class DetectUiForSpeedPlanet : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
+public class DetectUiForSpeedPlanet : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IEndDragHandler, IDragHandler
     , IPointerExitHandler
 {
     public GameManager gameManager;
     
-    public void OnPointerClick(PointerEventData eventData) // 3
+    public void OnPointerClick(PointerEventData eventData)
     {
-        gameManager.checkClickUi = true;
-        Debug.Log(gameManager.listPlanetInformations[gameManager.nameActive].speed);
-        
+        GameObject.Find(gameManager.nameActive).GetComponent<CircleMovation>().indexMax = 2000;
+        GameObject.Find(gameManager.nameActive).GetComponent<CircleMovation>().firstDraw = true;
     }
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        gameManager.checkClickUi = true;
     }
  
     public void OnPointerExit(PointerEventData eventData)
     {
-        gameManager.checkClickUi = false;
+    }
+    
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        GameObject.Find(gameManager.nameActive).GetComponent<CircleMovation>().indexMax = 2000;
+        GameObject.Find(gameManager.nameActive).GetComponent<CircleMovation>().firstDraw = true;
+    }
+    
+    public void OnDrag(PointerEventData eventData)
+    {
+        
     }
 }

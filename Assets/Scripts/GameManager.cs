@@ -116,8 +116,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        TimeScale();
-        changeView.onValueChanged.AddListener((delegate { ChangeView3D(changeView.isOn); }));
+        changeView.onValueChanged.AddListener(delegate { ChangeView3D(changeView.isOn); });
         MoveCamera();
         DeActiveGameObject();
     }
@@ -430,7 +429,7 @@ public class GameManager : MonoBehaviour
             {
                 return;
             }
-
+            
             listPlanetInformations[nameActive] = CloneDictionaryCloningValue(listPlanetInformationsTmp[nameActive]);
             upHeight.value = listPlanetInformations[nameActive].height;
             upWidth.value = listPlanetInformations[nameActive].width;
@@ -442,14 +441,12 @@ public class GameManager : MonoBehaviour
     {
         if (Time.timeScale > 0.0f)
         {
-            pauseText.text = "Tiếp tục";
             prevTimeScale = Time.timeScale;
             Time.timeScale = 0.0f;
         }
         else
         {
             timeScale.value = prevTimeScale;
-            pauseText.text = "Tạm Dừng";
             Time.timeScale = prevTimeScale;
         }
     }
@@ -464,6 +461,7 @@ public class GameManager : MonoBehaviour
             }
 
             Time.timeScale = arg0;
+            Time.fixedDeltaTime = 0.02f * Time.timeScale;
         });
     }
 
@@ -502,9 +500,16 @@ public class GameManager : MonoBehaviour
     {
         return (TValue)original.Clone();
     }
-
-    public IEnumerator waitting()
+    
+    public int FindIndexPositionChange(LineRenderer lineRenderer, Transform transform)
     {
-        yield return new WaitForSeconds(0.1f);
+        for (int i = 0; i < lineRenderer.positionCount -1; i++)
+        {
+            if((transform.position - lineRenderer.GetPosition(i)).magnitude <= 0.5f)
+            {
+                return i;
+            }
+        }
+        return 0;
     }
 }

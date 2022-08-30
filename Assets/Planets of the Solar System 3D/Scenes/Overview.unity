@@ -435,6 +435,7 @@ GameObject:
   - component: {fileID: 161599191}
   - component: {fileID: 161599192}
   - component: {fileID: 161599193}
+  - component: {fileID: 161599194}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -510,10 +511,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 1853006301}
   m_HandleRect: {fileID: 1564647569}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.7
   m_MaxValue: 10
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -531,6 +532,19 @@ BoxCollider:
   m_Size: {x: 160, y: 20, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &161599193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161599189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c035b7d46d0a67a4b83e13827305e523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 1262270847}
+--- !u!114 &161599194
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -647,7 +661,7 @@ MonoBehaviour:
   zPosition: 0
   firstAdd: 1
   indexMax: 2000
-  firstDraw: 1
+  firstDraw: 0
   firstDrawHeight: 1
 --- !u!120 &241309036
 LineRenderer:
@@ -992,7 +1006,7 @@ MonoBehaviour:
   zPosition: 0
   firstAdd: 1
   indexMax: 2000
-  firstDraw: 1
+  firstDraw: 0
   firstDrawHeight: 1
 --- !u!120 &305118994
 LineRenderer:
@@ -1261,7 +1275,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 368333599}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c035b7d46d0a67a4b83e13827305e523, type: 3}
+  m_Script: {fileID: 11500000, guid: e2a9fc4d98913334bbac3385a4c7f6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1262270847}
@@ -1428,7 +1442,7 @@ MonoBehaviour:
   zPosition: 0
   firstAdd: 1
   indexMax: 3000
-  firstDraw: 1
+  firstDraw: 0
   firstDrawHeight: 1
 --- !u!120 &418158075
 LineRenderer:
@@ -1776,7 +1790,7 @@ MonoBehaviour:
   zPosition: 0
   firstAdd: 1
   indexMax: 2000
-  firstDraw: 1
+  firstDraw: 0
   firstDrawHeight: 1
 --- !u!120 &497386690
 LineRenderer:
@@ -3296,6 +3310,7 @@ GameObject:
   - component: {fileID: 918598161}
   - component: {fileID: 918598162}
   - component: {fileID: 918598163}
+  - component: {fileID: 918598164}
   - component: {fileID: 918598165}
   m_Layer: 5
   m_Name: UpHeightSlider
@@ -3372,10 +3387,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 972476456}
   m_HandleRect: {fileID: 1749975167}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.1
   m_MaxValue: 10
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -3404,7 +3419,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 160, y: 20, z: 10}
   m_Center: {x: 0, y: 0, z: -300}
---- !u!114 &918598165
+--- !u!114 &918598164
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3414,6 +3429,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2a9fc4d98913334bbac3385a4c7f6b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 1262270847}
+--- !u!114 &918598165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918598160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 641081d760b9f4240b5454456614cf6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1262270847}
@@ -4269,7 +4297,7 @@ MonoBehaviour:
   zPosition: 0
   firstAdd: 1
   indexMax: 4000
-  firstDraw: 1
+  firstDraw: 0
   firstDrawHeight: 1
 --- !u!120 &1225100897
 LineRenderer:
@@ -4711,7 +4739,7 @@ MonoBehaviour:
   moveY3D: 0
   prevSpeed: 0
   count: 0
-  isDrawAgainAll: 0
+  isDrawAgainAll: 1
   countPlanetDrew: 0
   prevNameActive: 
   firtsCheckName: 0
@@ -5137,7 +5165,7 @@ MonoBehaviour:
   zPosition: 0
   firstAdd: 1
   indexMax: 2000
-  firstDraw: 1
+  firstDraw: 0
   firstDrawHeight: 1
 --- !u!120 &1355588200
 LineRenderer:
@@ -5973,6 +6001,7 @@ GameObject:
   - component: {fileID: 1500916855}
   - component: {fileID: 1500916856}
   - component: {fileID: 1500916857}
+  - component: {fileID: 1500916858}
   m_Layer: 5
   m_Name: TimeScale
   m_TagString: Untagged
@@ -6054,7 +6083,19 @@ MonoBehaviour:
   m_Value: 0.1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1262270847}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: TimeScale
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &1500916855
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6091,6 +6132,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2a9fc4d98913334bbac3385a4c7f6b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 1262270847}
+--- !u!114 &1500916858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500916852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fae95e2e5917b8247971cba7b02fd397, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1262270847}
@@ -6490,6 +6544,7 @@ GameObject:
   - component: {fileID: 1544859856}
   - component: {fileID: 1544859857}
   - component: {fileID: 1544859858}
+  - component: {fileID: 1544859859}
   - component: {fileID: 1544859860}
   m_Layer: 5
   m_Name: UpwidthSlider
@@ -6566,10 +6621,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 534312093}
   m_HandleRect: {fileID: 1254105528}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.1
   m_MaxValue: 10
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -6598,7 +6653,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 160, y: 20, z: 10}
   m_Center: {x: 0, y: 0, z: -300}
---- !u!114 &1544859860
+--- !u!114 &1544859859
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6608,6 +6663,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2a9fc4d98913334bbac3385a4c7f6b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 1262270847}
+--- !u!114 &1544859860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544859855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 641081d760b9f4240b5454456614cf6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1262270847}
@@ -7389,7 +7457,7 @@ MonoBehaviour:
   zPosition: 0
   firstAdd: 1
   indexMax: 2000
-  firstDraw: 1
+  firstDraw: 0
   firstDrawHeight: 1
 --- !u!120 &1784185775
 LineRenderer:
@@ -7599,7 +7667,7 @@ MonoBehaviour:
   zPosition: 0
   firstAdd: 1
   indexMax: 2000
-  firstDraw: 1
+  firstDraw: 0
   firstDrawHeight: 1
 --- !u!120 &1838223068
 LineRenderer:
@@ -8290,7 +8358,7 @@ MonoBehaviour:
   zPosition: 0
   firstAdd: 1
   indexMax: 2000
-  firstDraw: 1
+  firstDraw: 0
   firstDrawHeight: 1
 --- !u!120 &2043996334
 LineRenderer:

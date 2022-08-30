@@ -5001,7 +5001,7 @@ MonoBehaviour:
   distaneWithSun: 10
   width: 10
   height: 10
-  speed: 6
+  speed: 5.192414
   longDescription: "M\u1EB7t Tr\u0103ng l\xE0 v\u1EC7 tinh t\u1EF1 nhi\xEAn duy nh\u1EA5t
     c\u1EE7a Tr\xE1i \u0110\u1EA5t. V\u1EC7 tinh n\xE0y \u0111\xE3 \u0111\u01B0\u1EE3c
     con ng\u01B0\u1EDDi bi\u1EBFt \u0111\u1EBFn t\u1EEB th\u1EDDi ti\u1EC1n s\u1EED
@@ -5013,6 +5013,7 @@ MonoBehaviour:
   speedrotation: 0
   zPosition: 0
   directionOfRotation: -1
+  xRotation: 0
 --- !u!1 &1461827109007070
 GameObject:
   m_ObjectHideFlags: 0

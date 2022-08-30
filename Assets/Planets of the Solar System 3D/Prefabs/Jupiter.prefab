@@ -4999,7 +4999,7 @@ MonoBehaviour:
   distaneWithSun: 250
   width: 250
   height: 250
-  speed: 1.3
+  speed: 1
   longDescription: "Sao M\u1ED9c (Jupiter) hay M\u1ED9c tinh l\xE0 h\xE0nh tinh th\u1EE9
     n\u0103m t\xEDnh t\u1EEB M\u1EB7t Tr\u1EDDi v\xE0 l\xE0 h\xE0nh tinh l\u1EDBn
     nh\u1EA5t trong H\u1EC7 M\u1EB7t Tr\u1EDDi."

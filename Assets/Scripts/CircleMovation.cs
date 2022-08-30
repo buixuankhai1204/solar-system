@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +19,7 @@ public class CircleMovation : MonoBehaviour
     private int count;
     private float prevWidth;
     private float prevHeight;
-    private bool firstClick = true;
+    public bool firstClick = true;
     public float zPosition;
     private float speedAll;
     private List<Vector3> liststartPoints;
@@ -38,6 +39,14 @@ public class CircleMovation : MonoBehaviour
         liststartPoints = new List<Vector3>();
     }
 
+    private void OnEnable()
+    {
+        if (transform.name == "Moon")
+        {
+            GetComponent<LineRenderer>().enabled = false;
+        }
+    }
+
     void Start()
     {
         speedAll = 0.03f;
@@ -49,19 +58,23 @@ public class CircleMovation : MonoBehaviour
     IEnumerator StartMoving()
     {
         yield return new WaitForSeconds(1);
-        if (transform.name != "Moon")
+
+        for (int i = 0; i < indexMax; i++)
         {
-            for (int i = 0; i < indexMax; i++)
+            angle += speedAll * gameManager.listPlanetInformations[transform.name].speed * Time.timeScale;
+            x = Mathf.Cos(angle) * gameManager.listPlanetInformations[transform.name].width * gameManager.scale;
+            y = Mathf.Sin(angle) * gameManager.listPlanetInformations[transform.name].height * gameManager.scale;
+            z = Mathf.Cos(angle) * gameManager.listPlanetInformations[transform.name].zPosition * gameManager.scale;
+            orbit.positionCount++;
+            currentIndex = orbit.positionCount - 1;
+            if ((new Vector3(x, y, z) - orbit.GetPosition(0)).magnitude < 0.25f)
             {
-                angle += speedAll * gameManager.listPlanetInformations[transform.name].speed * Time.timeScale;
-                x = Mathf.Cos(angle) * gameManager.listPlanetInformations[transform.name].width * gameManager.scale;
-                y = Mathf.Sin(angle) * gameManager.listPlanetInformations[transform.name].height * gameManager.scale;
-                z = Mathf.Cos(angle) * gameManager.listPlanetInformations[transform.name].zPosition * gameManager.scale;
-                orbit.positionCount++;
-                currentIndex = orbit.positionCount - 1;
-                orbit.SetPosition(currentIndex, new Vector3(x, y, z));
-                liststartPoints.Add(new Vector3(x, y, z));
+                indexMax = orbit.positionCount;
             }
+
+            orbit.SetPosition(currentIndex, new Vector3(x, y, z));
+
+            liststartPoints.Add(new Vector3(x, y, z));
         }
 
         startMove = true;
@@ -71,21 +84,23 @@ public class CircleMovation : MonoBehaviour
     {
         if (startMove)
         {
-            SliderController();
-            ChangeSpeedCameraSlier();
-            RotatePlanet();
-            CheckDrawAgain();
-            SetPositionPlanet();
+            if (Time.timeScale != 0)
+            {
+                DrawForChangeSpeed();
+                SliderController();
+                ChangeSpeedCameraSlier();
+                RotatePlanet();
+                CheckDrawAgain();
+                SetPositionPlanet();
+            }
+
             ChangeBoxCollider();
-            
             showInformation.ShowNameActive(transform);
         }
-
     }
 
     private void OnMouseDown()
     {
-       
         gameManager.checkShowInf = true;
         showInformation.ShowInformationPlanet(transform.gameObject.name, this.gameObject);
         if (Input.GetButtonDown("Fire1"))
@@ -111,7 +126,6 @@ public class CircleMovation : MonoBehaviour
         gameManager.slider.onValueChanged.AddListener(arg0 =>
         {
             gameManager.listPlanetInformations[gameManager.nameActive].speed = arg0;
-            
         });
     }
 
@@ -147,10 +161,10 @@ public class CircleMovation : MonoBehaviour
 
             if (gameManager.nameActive == name)
             {
-                gameManager.upHeight.minValue = 0;
+                gameManager.upHeight.minValue = 10;
                 gameManager.upHeight.maxValue =
                     gameManager.listPlanetInformationsTmp[raycastHit.transform.name].distaneWithSun * 2;
-                gameManager.upWidth.minValue = 0;
+                gameManager.upWidth.minValue = 10;
                 gameManager.upWidth.maxValue =
                     gameManager.listPlanetInformationsTmp[raycastHit.transform.name].distaneWithSun * 2;
                 gameManager.upHeight.value = gameManager.listPlanetInformations[raycastHit.transform.name].height;
@@ -171,15 +185,28 @@ public class CircleMovation : MonoBehaviour
             z = Mathf.Cos(angle) * gameManager.listPlanetInformations[transform.name].zPosition * gameManager.scale;
             orbit.positionCount++;
             currentIndex = orbit.positionCount - 1;
+
+            if ((new Vector3(x, y, z) - orbit.GetPosition(0)).magnitude < 0.01f)
+            {
+                if (firstClick == false)
+                {
+                    indexMax = orbit.positionCount;
+                }
+
+                if (firstClick)
+                {
+                    firstClick = false;
+                }
+            }
+
             orbit.SetPosition(currentIndex, new Vector3(x, y, z));
         }
+
         angle = 0;
-        
     }
 
     public void ChangeBoxCollider()
     {
-        
         GetComponent<SphereCollider>().radius = Camera.main.fieldOfView / 10;
         if (GetComponent<SphereCollider>().radius < 1)
         {
@@ -202,7 +229,6 @@ public class CircleMovation : MonoBehaviour
         if (gameManager.isDrawAgainAll && gameManager.countPlanetDrew < 10)
         {
             gameManager.countPlanetDrew++;
-            // Invoke(nameof(DrawAgain), 0.05f);
             RunDefault(gameManager.listPlanetInformations[transform.name].width,
                 gameManager.listPlanetInformations[transform.name].height);
         }
@@ -216,21 +242,29 @@ public class CircleMovation : MonoBehaviour
 
     private void SetPositionPlanet()
     {
-        
-        if (transform.name == "Moon")
+        if (countPos == orbit.positionCount)
         {
-            transform.position = GameObject.FindWithTag("Earth").transform.position;
-            transform.position += new Vector3(x * zPosition, y * zPosition);
+            countPos = gameManager.FindIndexPositionChange(orbit, transform);
+        }
+
+        if (transform.name != "Moon")
+        {
+            if (orbit.positionCount >= countPos)
+            {
+                transform.position = orbit.GetPosition(countPos);
+            }
         }
         else
         {
-            transform.position = orbit.GetPosition(countPos);
-            countPos++;
-            if (countPos == orbit.positionCount)
+            if (orbit.positionCount >= countPos)
             {
-                countPos = 0;
+                transform.position = GameObject.FindWithTag("Earth").transform.position;
+                transform.position += new Vector3(orbit.GetPosition(countPos).x * zPosition,
+                    orbit.GetPosition(countPos).y * zPosition);
             }
         }
+
+        countPos++;
     }
 
     public void RotatePlanet()
@@ -240,5 +274,41 @@ public class CircleMovation : MonoBehaviour
             0.05f * gameManager.listPlanetInformations[transform.name].directionOfRotation,
             Space.Self);
     }
-    
+
+    public void DrawForChangeSpeed()
+    {
+        if (firstDraw && gameManager.nameActive == transform.name)
+        {
+            orbit.positionCount = 0;
+            currentIndex = 0;
+            for (int i = 0; i < indexMax; i++)
+            {
+                angle += speedAll * gameManager.listPlanetInformations[transform.name].speed * Time.timeScale;
+                x = Mathf.Cos(angle) * gameManager.listPlanetInformations[transform.name].width * gameManager.scale;
+                y = Mathf.Sin(angle) * gameManager.listPlanetInformations[transform.name].height * gameManager.scale;
+                z = Mathf.Cos(angle) * gameManager.listPlanetInformations[transform.name].zPosition * gameManager.scale;
+                orbit.positionCount++;
+                currentIndex = orbit.positionCount - 1;
+
+
+                if ((new Vector3(x, y, z) - orbit.GetPosition(0)).magnitude < 0.01f)
+                {
+                    if (firstAdd == false)
+                    {
+                        indexMax = orbit.positionCount;
+                    }
+
+                    if (firstAdd)
+                    {
+                        firstAdd = false;
+                    }
+                }
+
+                orbit.SetPosition(currentIndex, new Vector3(x, y, z));
+            }
+
+            countPos = gameManager.FindIndexPositionChange(orbit, transform);
+            firstDraw = false;
+        }
+    }
 }
